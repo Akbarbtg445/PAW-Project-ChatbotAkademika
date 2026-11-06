@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,7 @@
             primary: {
               50: '#eef2ff',
               100: '#e0e7ff',
+              200: '#c7d2fe',
               500: '#6366f1',
               600: '#4f46e5',
               700: '#4338ca',
@@ -26,79 +27,294 @@
     }
   </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
   <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-indigo-200 group-hover:scale-105 transition-transform">
           <i class="fa-solid fa-robot text-lg"></i>
         </div>
         <div>
-          <span class="font-bold text-lg text-slate-900 tracking-tight"><%= appName %></span>
-          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-medium bg-indigo-100 text-indigo-700 rounded-full">v<%= appVersion %></span>
+          <span class="font-bold text-lg text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors"><%= appName %></span>
+          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold bg-indigo-100 text-indigo-700 rounded-full">v<%= appVersion %></span>
         </div>
-      </div>
+      </a>
 
-      <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-600">
         <a href="#fitur" class="hover:text-indigo-600 transition">Fitur Utama</a>
-        <a href="#produk" class="hover:text-indigo-600 transition">Katalog Produk/Layanan</a>
+        <a href="#produk" class="hover:text-indigo-600 transition">Katalog Layanan</a>
+        <a href="#persona" class="hover:text-indigo-600 transition">Target Pengguna</a>
         <a href="#chat-demo" class="hover:text-indigo-600 transition">Demo Chatbot</a>
-        <a href="#api-tester" class="hover:text-indigo-600 transition">API Endpoints</a>
+        <a href="#api-tester" class="hover:text-indigo-600 transition">Uji REST API</a>
         <a href="#tim" class="hover:text-indigo-600 transition">Tim Pengembang</a>
       </nav>
 
-      <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-          <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-          Server Aktif
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <span class="w-2 h-2 mr-2 bg-emerald-500 rounded-full animate-pulse"></span>
+          Server Online (Port 3000)
         </span>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="py-16 md:py-24 bg-gradient-to-b from-indigo-50/60 to-slate-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 mb-6 text-xs font-medium text-indigo-700 bg-indigo-100/80 rounded-full">
-        <i class="fa-solid fa-graduation-cap"></i>
-        <span>Pengembangan Aplikasi Web - Week 7</span>
-      </div>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-        Asisten Cerdas Informasi <br class="hidden sm:inline" />
-        <span class="text-indigo-600">Akademik Kampus</span>
-      </h1>
-      <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-        <%= description %>. Memudahkan mahasiswa menemukan panduan KRS, kalender akademik, berkas administrasi, dan prosedur yudisium secara cepat, terpadu, dan konsisten.
-      </p>
+  <!-- Hero Section with Visual Imagery -->
+  <section class="relative overflow-hidden pt-12 pb-20 md:py-24 bg-gradient-to-br from-indigo-50/80 via-white to-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 mb-6 text-xs font-semibold text-indigo-700 bg-indigo-100/90 rounded-full border border-indigo-200">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>PAW Week 7: Integrasi Frontend, REST API & Logger</span>
+          </div>
 
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
-        <a href="#chat-demo" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-200 transition flex items-center space-x-2">
-          <i class="fa-solid fa-comments"></i>
-          <span>Coba Chatbot Demo</span>
-        </a>
-        <a href="#api-tester" class="px-6 py-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold border border-slate-300 shadow-sm transition flex items-center space-x-2">
-          <i class="fa-solid fa-network-wired"></i>
-          <span>Uji REST API</span>
-        </a>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+            Asisten Pintar <br class="hidden sm:inline" />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600">
+              Informasi Akademik
+            </span> Kampus
+          </h1>
+
+          <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
+            Solusi cepat dan terpusat bagi mahasiswa untuk menemukan informasi jadwal, kalender akademik, KRS, dan prosedur administrasi BAAK secara instan tanpa antrean.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+            <a href="#chat-demo" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-200 transition-all flex items-center space-x-2">
+              <i class="fa-solid fa-comments"></i>
+              <span>Coba Demo Chatbot</span>
+            </a>
+            <a href="#api-tester" class="px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold border border-slate-300 shadow-sm transition-all flex items-center space-x-2">
+              <i class="fa-solid fa-code"></i>
+              <span>Uji Endpoint REST API</span>
+            </a>
+          </div>
+
+          <!-- Quick Metrics Bar (from PRD) -->
+          <div class="mt-10 pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-center lg:text-left">
+            <div>
+              <p class="text-2xl font-black text-indigo-600">&lt; 3 Detik</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Target Respon Jawaban</p>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-indigo-600">100%</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Penanganan Fallback</p>
+            </div>
+            <div>
+              <p class="text-2xl font-black text-indigo-600">24/7</p>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">Akses Mandiri Mahasiswa</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual Graphic -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <!-- Decorative Glow Background -->
+            <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur-2xl opacity-20 transform -rotate-1"></div>
+            
+            <!-- Hero Image Card -->
+            <div class="relative bg-white p-3 rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" 
+                alt="Mahasiswa berkonsultasi akademik" 
+                class="w-full h-80 object-cover rounded-2xl"
+              />
+              
+              <!-- Floating Badge 1: Bot Response -->
+              <div class="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center space-x-2.5 animate-bounce" style="animation-duration: 4s;">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-slate-800">Alur KRS & Kalender</p>
+                  <p class="text-[10px] text-emerald-600 font-semibold flex items-center">
+                    <i class="fa-solid fa-check-circle mr-1"></i> Terverifikasi BAAK
+                  </p>
+                </div>
+              </div>
+
+              <!-- Floating Badge 2: Quick Status -->
+              <div class="absolute bottom-6 right-6 bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg text-white flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
+                <p class="text-xs font-medium">Asisten Aktif &bull; Siap Menjawab</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Section: Chatbot Demo Preview (Based on PRD US-01, US-02, US-03, F-01, F-02, F-03) -->
-  <section id="chat-demo" class="py-16 bg-white border-y border-slate-200">
+  <!-- Section: Fitur Utama (id="fitur" - Sesuai PRD F-01, F-02, F-03) -->
+  <section id="fitur" class="py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+          Fitur & Spesifikasi PRD
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+          Solusi Terarah Berdasarkan Kebutuhan Akademik
+        </h2>
+        <p class="text-slate-600 text-base mt-3">
+          Dirancang untuk memecahkan masalah informasi yang tersebar dan mengurangi beban pertanyaan berulang pada bagian tata usaha kampus.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Fitur 1: F-01 -->
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-48 overflow-hidden relative">
+            <img 
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
+              alt="Pencocokan Pola AIML" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 px-2.5 py-1 text-[11px] font-bold bg-indigo-600 text-white rounded-md shadow">
+              Fitur F-01 (Must)
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">Pencocokan Pola Pertanyaan AIML</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Mencocokkan pertanyaan yang diketik mahasiswa dengan basis pengetahuan aturan akademik secara tepat dan menghasilkan jawaban yang konsisten.
+              </p>
+            </div>
+            <div class="mt-4 pt-4 border-t border-slate-200 flex items-center text-xs font-semibold text-indigo-600">
+              <span>Sesuai User Story US-01</span>
+              <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fitur 2: F-02 -->
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-48 overflow-hidden relative">
+            <img 
+              src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" 
+              alt="Shortcut Pertanyaan Populer" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 px-2.5 py-1 text-[11px] font-bold bg-purple-600 text-white rounded-md shadow">
+              Fitur F-02 (Should)
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">Shortcut Pertanyaan Populer</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Menyediakan tombol pertanyaan cepat seputar KRS, kalender akademik, dan yudisium agar mahasiswa baru dapat langsung memulai tanpa merangkai kalimat.
+              </p>
+            </div>
+            <div class="mt-4 pt-4 border-t border-slate-200 flex items-center text-xs font-semibold text-purple-600">
+              <span>Sesuai User Story US-02</span>
+              <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fitur 3: F-03 -->
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+          <div class="h-48 overflow-hidden relative">
+            <img 
+              src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80" 
+              alt="Pesan Fallback Cerdas" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+            <span class="absolute bottom-3 left-4 px-2.5 py-1 text-[11px] font-bold bg-amber-600 text-white rounded-md shadow">
+              Fitur F-03 (Must)
+            </span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">Pesan Fallback & Eskalasi BAAK</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Memberikan notifikasi ramah dan saran langkah berikutnya ketika pertanyaan mahasiswa di luar basis data, mencegah asumsi informasi keliru.
+              </p>
+            </div>
+            <div class="mt-4 pt-4 border-t border-slate-200 flex items-center text-xs font-semibold text-amber-600">
+              <span>Sesuai User Story US-03</span>
+              <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Target User / Persona (PRD Section 4) -->
+  <section id="persona" class="py-16 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">Persona & Stakeholder</span>
+        <h2 class="text-3xl font-bold text-slate-900 mt-2">Target Pengguna Aplikasi</h2>
+        <p class="text-slate-500 text-sm mt-2">Disesuaikan dengan analisis kebutuhan pengguna pada dokumen PRD.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Persona 1 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start space-x-5">
+          <img 
+            src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" 
+            alt="Dimas Gonjales" 
+            class="w-20 h-20 rounded-2xl object-cover shadow-md flex-shrink-0"
+          />
+          <div>
+            <span class="px-2.5 py-0.5 text-xs font-semibold bg-indigo-100 text-indigo-700 rounded-full">Mahasiswa</span>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">Dimas Gonjales</h3>
+            <p class="text-xs text-slate-500 mt-0.5 mb-2">Mahasiswa Aktif Fakultas Ilmu Komputer</p>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              <strong>Kebutuhan Utama:</strong> Memperoleh jawaban instan, pasti, dan akurat mengenai alur pengisian KRS, jadwal revisi, dan syarat administrasi tanpa harus mengantre di loket kampus.
+            </p>
+          </div>
+        </div>
+
+        <!-- Persona 2 -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start space-x-5">
+          <img 
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" 
+            alt="Supri Sunandar" 
+            class="w-20 h-20 rounded-2xl object-cover shadow-md flex-shrink-0"
+          />
+          <div>
+            <span class="px-2.5 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700 rounded-full">Staf BAAK</span>
+            <h3 class="text-lg font-bold text-slate-900 mt-1">Supri Sunandar</h3>
+            <p class="text-xs text-slate-500 mt-0.5 mb-2">Staf Layanan Administrasi Akademik</p>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              <strong>Kebutuhan Utama:</strong> Membutuhkan sistem otomatis untuk menyaring pertanyaan umum mahasiswa serta panel informasi yang dapat diperbarui dengan mudah tanpa memodifikasi kode program.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Chatbot Demo Preview -->
+  <section id="chat-demo" class="py-20 bg-white border-b border-slate-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-10">
-        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">Simulasi Antarmuka Mahasiswa</span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-2">Pratinjau Interaktif Chatbot Akademika</h2>
-        <p class="text-slate-500 text-sm mt-2">Mendukung input pertanyaan manual dan shortcut pertanyaan populer sesuai PRD.</p>
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+          Simulasi Interaktif Mahasiswa
+        </span>
+        <h2 class="text-3xl font-bold text-slate-900 mt-3">Pratinjau Percakapan Chatbot Akademika</h2>
+        <p class="text-slate-500 text-sm mt-2">Mendukung pengiriman pertanyaan teks bebas serta pemilihan tombol shortcut pertanyaan populer.</p>
       </div>
 
       <!-- Chat Container -->
       <div class="bg-slate-50 rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
         <!-- Chat Header -->
-        <div class="bg-indigo-600 text-white px-6 py-4 flex items-center justify-between">
+        <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-6 py-4 flex items-center justify-between">
           <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">
               <i class="fa-solid fa-robot"></i>
@@ -106,34 +322,34 @@
             <div>
               <h3 class="font-semibold text-sm">Bot Akademika BAAK</h3>
               <p class="text-xs text-indigo-200 flex items-center">
-                <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full"></span> Respons cepat (&lt; 3s)
+                <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Respons Cepat (&lt; 3 Detik)
               </p>
             </div>
           </div>
-          <span class="text-xs bg-indigo-700/60 px-3 py-1 rounded-full border border-indigo-400/30">AIML Engine Ready</span>
+          <span class="text-xs bg-indigo-800/60 px-3 py-1 rounded-full border border-indigo-400/30">AIML Engine Ready</span>
         </div>
 
         <!-- Chat Messages Box -->
         <div id="chat-box" class="p-6 space-y-4 h-80 overflow-y-auto">
           <!-- Bot Welcome Message -->
           <div class="flex items-start space-x-3">
-            <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-xs">
+            <div class="w-9 h-9 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-sm shadow">
               <i class="fa-solid fa-robot"></i>
             </div>
-            <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700">
-              Halo! Saya <strong>Chatbot Akademika</strong>. Ada yang bisa saya bantu terkait jadwal, alur KRS, kalender akademik, atau administrasi BAAK?
+            <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700 leading-relaxed">
+              Halo! Saya <strong>Chatbot Akademika</strong>. Saya dapat membantu memberikan panduan terkait pengisian KRS, kalender akademik, jadwal pembayaran UKT, syarat skripsi, dan verifikasi yudisium. Ada yang ingin Anda tanyakan?
             </div>
           </div>
         </div>
 
         <!-- Popular Questions / Shortcuts (PRD US-02 / F-02) -->
-        <div class="px-6 py-3 bg-indigo-50/70 border-t border-slate-200">
-          <p class="text-xs font-semibold text-slate-500 mb-2 flex items-center">
-            <i class="fa-solid fa-bolt text-indigo-500 mr-1.5"></i> Pertanyaan Populer:
+        <div class="px-6 py-3 bg-indigo-50/80 border-t border-slate-200">
+          <p class="text-xs font-semibold text-slate-600 mb-2 flex items-center">
+            <i class="fa-solid fa-bolt text-indigo-500 mr-1.5"></i> Klik Pilihan Pertanyaan Populer:
           </p>
           <div class="flex flex-wrap gap-2">
             <% popularQuestions.forEach(question => { %>
-              <button onclick="sendQuickQuestion('<%= question %>')" class="text-xs bg-white hover:bg-indigo-600 hover:text-white text-slate-700 px-3 py-1.5 rounded-lg border border-slate-300 transition shadow-sm">
+              <button onclick="sendQuickQuestion('<%= question %>')" class="text-xs bg-white hover:bg-indigo-600 hover:text-white text-slate-700 px-3 py-1.5 rounded-lg border border-slate-300 transition-colors shadow-sm">
                 <%= question %>
               </button>
             <% }) %>
@@ -146,12 +362,12 @@
             <input 
               type="text" 
               id="user-input" 
-              placeholder="Ketik pertanyaan akademik Anda di sini (misal: jadwal KRS, syarat yudisium)..." 
+              placeholder="Ketik pertanyaan akademik Anda di sini (misal: syarat yudisium, batas ukt)..." 
               class="flex-1 px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
             />
             <button 
               type="submit" 
-              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl transition flex items-center space-x-2"
+              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl transition flex items-center space-x-2 shadow"
             >
               <span>Kirim</span>
               <i class="fa-solid fa-paper-plane text-xs"></i>
@@ -162,39 +378,62 @@
     </div>
   </section>
 
-  <!-- Section: Data Produk / Layanan Akademik (Dynamic from Backend) -->
-  <section id="produk" class="py-16 bg-slate-50">
+  <!-- Section: Data Produk / Layanan Akademik (Dynamic from Backend MVC) -->
+  <section id="produk" class="py-20 bg-slate-50 border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">Model Data Backend (MVC)</span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-2">Daftar Modul & Layanan Akademika</h2>
-        <p class="text-slate-500 text-sm mt-2">
-          Data berikut dirender secara dinamis dari Model Express.js (<code class="bg-slate-200 px-1 py-0.5 rounded text-xs">models/productModel.js</code>).
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
+          Model Data Backend (MVC)
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">Katalog Modul Layanan Akademika</h2>
+        <p class="text-slate-600 text-sm mt-2">
+          Data berikut dikelola dan dirender langsung dari Model Express.js (<code class="bg-indigo-100/80 text-indigo-800 px-1.5 py-0.5 rounded text-xs font-mono">models/productModel.js</code>).
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <% products.forEach(product => { %>
-          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            
             <div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
-                  <i class="fa-solid <%= product.ikon %>"></i>
-                </div>
-                <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600">
+              <!-- Visual Image for each product -->
+              <div class="h-44 overflow-hidden relative">
+                <img 
+                  src="<%= product.gambar %>" 
+                  alt="<%= product.nama %>" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                <span class="absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold rounded-full bg-white/90 backdrop-blur-md text-slate-700 shadow-sm">
                   <%= product.kategori %>
                 </span>
+                <div class="absolute bottom-3 left-4 text-white flex items-center space-x-2">
+                  <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-sm shadow">
+                    <i class="fa-solid <%= product.ikon %>"></i>
+                  </div>
+                  <span class="text-xs font-semibold drop-shadow">ID #<%= product.id %></span>
+                </div>
               </div>
-              <h3 class="text-lg font-bold text-slate-900 mb-2"><%= product.nama %></h3>
-              <p class="text-sm text-slate-600 leading-relaxed mb-4"><%= product.deskripsi %></p>
+
+              <!-- Product Details -->
+              <div class="p-6">
+                <h3 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2">
+                  <%= product.nama %>
+                </h3>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                  <%= product.deskripsi %>
+                </p>
+              </div>
             </div>
             
-            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span class="font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+            <div class="p-6 pt-0 border-t border-slate-100 mt-auto flex items-center justify-between text-xs">
+              <span class="font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
                 <i class="fa-solid fa-circle-check mr-1"></i> <%= product.tipe %>
               </span>
-              <span class="text-slate-400">ID: #<%= product.id %></span>
+              <span class="text-slate-400 font-medium">Status: <strong class="text-emerald-600"><%= product.status %></strong></span>
             </div>
+
           </div>
         <% }) %>
       </div>
@@ -202,88 +441,147 @@
   </section>
 
   <!-- Section: Live API Endpoint Tester -->
-  <section id="api-tester" class="py-16 bg-white border-t border-slate-200">
+  <section id="api-tester" class="py-20 bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-10">
-        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">REST API & Middleware Logger</span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-2">Pengujian Endpoint Langsung</h2>
-        <p class="text-slate-500 text-sm mt-2">
-          Uji endpoint backend secara langsung dari browser. Setiap request akan otomatis tercatat pada terminal/console backend oleh Middleware Logger.
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
+          REST API & Middleware Logger
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">Pengujian Endpoint Langsung</h2>
+        <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+          Uji endpoint backend secara langsung melalui <strong>Browser Interactive Tester</strong> maupun link <strong>Raw JSON</strong>. Setiap request akan otomatis diproses dan dicatat oleh <strong>Middleware Logger</strong> di terminal console backend.
         </p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
         <!-- Card Endpoint 1: GET /api/status -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center space-x-2">
-              <span class="px-2.5 py-1 text-xs font-bold bg-emerald-600 text-white rounded-md">GET</span>
-              <code class="text-sm font-semibold text-slate-800">/api/status</code>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 text-xs font-black bg-emerald-600 text-white rounded-md shadow-sm">GET</span>
+                <code class="text-sm font-bold text-slate-800">/api/status</code>
+              </div>
+              <div class="flex items-center space-x-2">
+                <!-- Direct link for raw JSON (Open in new tab) -->
+                <a 
+                  href="/api/status" 
+                  target="_blank" 
+                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center space-x-1"
+                  title="Buka response JSON mentah di tab baru"
+                >
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                  <span>Buka Raw URL</span>
+                </a>
+                <button 
+                  onclick="testApi('/api/status', 'status-output', 'status-badge')"
+                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow"
+                >
+                  <i class="fa-solid fa-play text-[10px]"></i>
+                  <span>Kirim Request</span>
+                </button>
+              </div>
             </div>
-            <button 
-              onclick="testApi('/api/status', 'status-output', 'status-badge')"
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow-sm"
-            >
-              <i class="fa-solid fa-play text-[10px]"></i>
-              <span>Kirim Request</span>
-            </button>
+            
+            <p class="text-xs text-slate-500 mb-3">
+              Mengembalikan status kesehatan server, waktu aktif (uptime), dan versi aplikasi Chatbot Akademika.
+            </p>
+            
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span class="font-medium">Response JSON:</span>
+              <span id="status-badge" class="font-medium text-slate-400">Belum diuji</span>
+            </div>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Mengembalikan status kesehatan server dan info aplikasi.</p>
-          
-          <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span>Response:</span>
-            <span id="status-badge" class="font-medium text-slate-400">Belum diuji</span>
-          </div>
-          <pre id="status-output" class="bg-slate-900 text-slate-100 p-4 rounded-xl text-xs overflow-x-auto h-48 font-mono">// Klik "Kirim Request" untuk melihat response JSON...</pre>
+
+          <pre id="status-output" class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-xs overflow-x-auto h-52 font-mono leading-relaxed shadow-inner">// Klik "Kirim Request" untuk menguji langsung di sini,
+// atau klik "Buka Raw URL" untuk membukanya di tab baru.</pre>
         </div>
 
         <!-- Card Endpoint 2: GET /api/produk -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center space-x-2">
-              <span class="px-2.5 py-1 text-xs font-bold bg-emerald-600 text-white rounded-md">GET</span>
-              <code class="text-sm font-semibold text-slate-800">/api/produk</code>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 text-xs font-black bg-emerald-600 text-white rounded-md shadow-sm">GET</span>
+                <code class="text-sm font-bold text-slate-800">/api/produk</code>
+              </div>
+              <div class="flex items-center space-x-2">
+                <!-- Direct link for raw JSON (Open in new tab) -->
+                <a 
+                  href="/api/produk" 
+                  target="_blank" 
+                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center space-x-1"
+                  title="Buka response JSON mentah di tab baru"
+                >
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                  <span>Buka Raw URL</span>
+                </a>
+                <button 
+                  onclick="testApi('/api/produk', 'produk-output', 'produk-badge')"
+                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow"
+                >
+                  <i class="fa-solid fa-play text-[10px]"></i>
+                  <span>Kirim Request</span>
+                </button>
+              </div>
             </div>
-            <button 
-              onclick="testApi('/api/produk', 'produk-output', 'produk-badge')"
-              class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow-sm"
-            >
-              <i class="fa-solid fa-play text-[10px]"></i>
-              <span>Kirim Request</span>
-            </button>
+            
+            <p class="text-xs text-slate-500 mb-3">
+              Mengembalikan data katalog modul dan layanan akademik dalam bentuk array JSON yang valid.
+            </p>
+            
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span class="font-medium">Response JSON:</span>
+              <span id="produk-badge" class="font-medium text-slate-400">Belum diuji</span>
+            </div>
           </div>
-          <p class="text-xs text-slate-500 mb-3">Mengembalikan daftar produk/layanan dalam bentuk array JSON.</p>
-          
-          <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
-            <span>Response:</span>
-            <span id="produk-badge" class="font-medium text-slate-400">Belum diuji</span>
-          </div>
-          <pre id="produk-output" class="bg-slate-900 text-slate-100 p-4 rounded-xl text-xs overflow-x-auto h-48 font-mono">// Klik "Kirim Request" untuk melihat response JSON...</pre>
+
+          <pre id="produk-output" class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-xs overflow-x-auto h-52 font-mono leading-relaxed shadow-inner">// Klik "Kirim Request" untuk menguji langsung di sini,
+// atau klik "Buka Raw URL" untuk membukanya di tab baru.</pre>
+        </div>
+
+      </div>
+
+      <!-- Panduan Pengujian Terminal / Postman -->
+      <div class="mt-8 bg-indigo-50/70 border border-indigo-200 rounded-2xl p-6">
+        <h4 class="text-sm font-bold text-indigo-900 flex items-center">
+          <i class="fa-solid fa-terminal mr-2 text-indigo-600"></i>
+          Catatan Verifikasi Middleware Logger di Terminal:
+        </h4>
+        <p class="text-xs text-indigo-800 mt-1 leading-relaxed">
+          Ketika tombol <strong>"Kirim Request"</strong> atau link <strong>"Buka Raw URL"</strong> diakses, perhatikan terminal backend tempat server Node.js berjalan. Middleware logger akan otomatis mencetak log seperti berikut:
+        </p>
+        <div class="mt-3 bg-slate-900 text-slate-200 p-3 rounded-xl font-mono text-xs overflow-x-auto">
+          [2026-11-06T15:52:52.989Z] [GET] /api/status - Status: 200 (4ms)<br/>
+          [2026-11-06T15:53:10.120Z] [GET] /api/produk - Status: 200 (3ms)
         </div>
       </div>
     </div>
   </section>
 
   <!-- Section: Tim Pengembang (Based on PRD Header) -->
-  <section id="tim" class="py-16 bg-slate-50 border-t border-slate-200">
+  <section id="tim" class="py-20 bg-slate-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-10">
-        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">Kolaborasi & Anggota Tim</span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-2">Tim Pengembang Chatbot Akademika</h2>
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
+          Kolaborasi & Penulis PRD
+        </span>
+        <h2 class="text-3xl font-bold text-slate-900 mt-3">Tim Pengembang Chatbot Akademika</h2>
         <p class="text-slate-500 text-sm mt-2">
-          Project Kelompok Pengembangan Aplikasi Web (PAW) - Semester Ganjil 2026/2027.
+          Praktikum Pengembangan Aplikasi Web (PAW) - Kelompok Chatbot Akademika.
         </p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <% teamMembers.forEach((member, idx) => { %>
-          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm flex-shrink-0">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex items-center space-x-3.5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white font-bold flex items-center justify-center text-sm shadow-md flex-shrink-0">
               <%= member.name.charAt(0) %>
             </div>
             <div class="overflow-hidden">
-              <h4 class="text-sm font-semibold text-slate-800 truncate"><%= member.name %></h4>
-              <p class="text-xs text-slate-500 font-mono"><%= member.nim %></p>
+              <h4 class="text-sm font-bold text-slate-800 truncate"><%= member.name %></h4>
+              <p class="text-xs text-indigo-600 font-mono font-medium mt-0.5"><%= member.nim %></p>
             </div>
           </div>
         <% }) %>
@@ -292,22 +590,24 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800 text-sm">
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-robot text-indigo-400 text-lg"></i>
-        <span class="font-bold text-white"><%= appName %></span>
+        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-sm">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <span class="font-bold text-white text-base"><%= appName %></span>
         <span class="text-slate-500">| PAW Week 7 Integration Project</span>
       </div>
-      <p class="text-xs text-slate-400">
-        Dibangun dengan Express.js, EJS, Tailwind CSS & REST API Architecture (MVC).
+      <p class="text-xs text-slate-400 text-center md:text-right">
+        Dibangun dengan Node.js, Express.js (MVC), EJS, Tailwind CSS CDN & REST API.
       </p>
     </div>
   </footer>
 
   <!-- Frontend Logic Scripts -->
   <script>
-    // Knowledge Base sederhana untuk demo chatbot sesuai PRD (US-01, US-02, US-03)
+    // Knowledge Base sederhana sesuai PRD (US-01, US-02, US-03)
     const knowledgeBase = [
       {
         patterns: ["krs", "isi krs", "alur krs", "pengisian krs"],
@@ -336,7 +636,7 @@
       appendChatMessage('user', text);
       input.value = '';
 
-      // Tampilkan indikator mengetik sejenak untuk simulasi respons < 3s (PRD M-01)
+      // Tampilkan indikator respon cepat < 3 detik sesuai PRD M-01
       setTimeout(() => {
         const reply = findAnswer(text);
         appendChatMessage('bot', reply);
@@ -359,7 +659,7 @@
         }
       }
       // Fallback message sesuai PRD (US-03 / F-03)
-      return "Maaf, informasi untuk pertanyaan tersebut belum tersedia di basis pengetahuan kami. Silakan coba kata kunci lain atau hubungi staf BAAK di layanan administrasi kampus.";
+      return "Maaf, informasi untuk pertanyaan tersebut belum tersedia di basis pengetahuan kami. Silakan coba kata kunci lain atau hubungi staf BAAK di loket layanan administrasi kampus.";
     }
 
     function appendChatMessage(sender, text) {
@@ -369,19 +669,19 @@
 
       if (sender === 'user') {
         wrapper.innerHTML = `
-          <div class="bg-indigo-600 text-white p-3.5 rounded-2xl rounded-tr-none shadow-sm max-w-md text-sm">
+          <div class="bg-indigo-600 text-white p-3.5 rounded-2xl rounded-tr-none shadow-sm max-w-md text-sm leading-relaxed">
             ${text}
           </div>
-          <div class="w-8 h-8 rounded-full bg-slate-300 text-slate-700 flex-shrink-0 flex items-center justify-center text-xs font-bold">
+          <div class="w-8 h-8 rounded-full bg-slate-300 text-slate-700 flex-shrink-0 flex items-center justify-center text-xs font-bold shadow">
             <i class="fa-solid fa-user"></i>
           </div>
         `;
       } else {
         wrapper.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold">
+          <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold shadow">
             <i class="fa-solid fa-robot"></i>
           </div>
-          <div class="bg-white border border-slate-200 p-3.5 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700">
+          <div class="bg-white border border-slate-200 p-3.5 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700 leading-relaxed">
             ${text}
           </div>
         `;
@@ -396,8 +696,8 @@
       const outputElem = document.getElementById(outputId);
       const badgeElem = document.getElementById(badgeId);
 
-      badgeElem.innerHTML = `<span class="text-amber-500"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Memuat...</span>`;
-      outputElem.innerText = "// Mengirim request HTTP...";
+      badgeElem.innerHTML = `<span class="text-amber-500 font-semibold"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Mengirim Request...</span>`;
+      outputElem.innerText = "// Mengirim HTTP GET request ke " + url + "...";
 
       const t0 = performance.now();
       try {
@@ -406,10 +706,10 @@
         const duration = Math.round(t1 - t0);
         const data = await res.json();
 
-        badgeElem.innerHTML = `<span class="text-emerald-600 font-semibold">${res.status} OK (${duration}ms)</span>`;
+        badgeElem.innerHTML = `<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"><i class="fa-solid fa-circle-check mr-1"></i>${res.status} OK (${duration}ms)</span>`;
         outputElem.innerText = JSON.stringify(data, null, 2);
       } catch (err) {
-        badgeElem.innerHTML = `<span class="text-rose-600 font-semibold">Error</span>`;
+        badgeElem.innerHTML = `<span class="text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Error</span>`;
         outputElem.innerText = `Error: ${err.message}`;
       }
     }
