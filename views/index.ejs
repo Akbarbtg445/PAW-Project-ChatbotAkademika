@@ -8,6 +8,38 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- AOS (Animate On Scroll) CDN -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    /* Smooth Keyframe Animations */
+    @keyframes chatSlideUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .chat-bubble-enter {
+      animation: chatSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .feature-tab-btn.active {
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+      color: #ffffff;
+      box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.5);
+      border-color: transparent;
+    }
+    .product-filter-btn.active {
+      background-color: #4f46e5;
+      color: #ffffff;
+      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
+    }
+    /* Smooth Transition for Feature Switcher */
+    .tab-content-enter {
+      animation: featureFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes featureFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
   <script>
     tailwind.config = {
       theme: {
@@ -27,149 +59,305 @@
     }
   </script>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
-  <!-- Navbar -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+  <!-- Navbar (Netflix Cinematic Dark Style) -->
+  <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shadow-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center space-x-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-indigo-200 group-hover:scale-105 transition-transform">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
           <i class="fa-solid fa-robot text-lg"></i>
         </div>
         <div>
-          <span class="font-bold text-lg text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors"><%= appName %></span>
-          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold bg-indigo-100 text-indigo-700 rounded-full">v<%= appVersion %></span>
+          <span class="font-bold text-lg text-white tracking-tight group-hover:text-indigo-400 transition-colors"><%= appName %></span>
+          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-xs font-semibold bg-indigo-900/80 text-indigo-300 border border-indigo-700/50 rounded-full">v<%= appVersion %></span>
         </div>
       </a>
 
-      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-600">
-        <a href="#fitur" class="hover:text-indigo-600 transition">Fitur Utama</a>
-        <a href="#produk" class="hover:text-indigo-600 transition">Katalog Layanan</a>
-        <a href="#persona" class="hover:text-indigo-600 transition">Target Pengguna</a>
-        <a href="#chat-demo" class="hover:text-indigo-600 transition">Demo Chatbot</a>
-        <a href="#api-tester" class="hover:text-indigo-600 transition">Uji REST API</a>
-        <a href="#tim" class="hover:text-indigo-600 transition">Tim Pengembang</a>
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-300">
+        <a href="#fitur" class="hover:text-white transition">Fitur Utama</a>
+        <a href="#produk" class="hover:text-white transition">Katalog Layanan</a>
+        <a href="#persona" class="hover:text-white transition">Target Pengguna</a>
+        <a href="#chat-demo" class="hover:text-white transition">Demo Chatbot</a>
+        <a href="#api-tester" class="hover:text-white transition">Uji REST API</a>
+        <a href="#tim" class="hover:text-white transition">Tim Pengembang</a>
       </nav>
 
       <div class="flex items-center space-x-3">
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-          <span class="w-2 h-2 mr-2 bg-emerald-500 rounded-full animate-pulse"></span>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80 shadow-sm">
+          <span class="w-2 h-2 mr-2 bg-emerald-400 rounded-full animate-pulse"></span>
           Server Online (Port 3000)
         </span>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section with Visual Imagery -->
-  <section class="relative overflow-hidden pt-12 pb-20 md:py-24 bg-gradient-to-br from-indigo-50/80 via-white to-slate-50 border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        <!-- Left Hero Content -->
-        <div class="lg:col-span-7 text-center lg:text-left">
-          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 mb-6 text-xs font-semibold text-indigo-700 bg-indigo-100/90 rounded-full border border-indigo-200">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>PAW Week 7: Integrasi Frontend, REST API & Logger</span>
-          </div>
+  <!-- Hero Section (Netflix Cinematic Background with Real University Stock Photography) -->
+  <section class="relative overflow-hidden min-h-[90vh] flex items-center justify-center border-b border-slate-800">
+    
+    <!-- Real Stock Photography Background (Bukan AI, 100% Real Photography dari Unsplash) -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img 
+        src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80" 
+        alt="Real University Campus Building - Photography by Vasily Kolotilov" 
+        class="w-full h-full object-cover object-center scale-105 filter brightness-90 contrast-105"
+      />
+      <!-- Netflix Cinematic Radial Vignette: Dark edges, subtle center glow -->
+      <div class="absolute inset-0" style="background: radial-gradient(circle at 50% 45%, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 60%, rgba(2, 6, 23, 0.98) 100%);"></div>
+      
+      <!-- Top to Bottom Gradient: Seamless blend with navbar and bottom section -->
+      <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.3) 25%, rgba(2, 6, 23, 0.6) 70%, rgba(2, 6, 23, 1) 100%);"></div>
+      
+      <!-- Subtle Ambient Grid Texture for High-Tech feel -->
+      <div class="absolute inset-0 opacity-15 bg-[linear-gradient(to_right,#6366f1_1px,transparent_1px),linear-gradient(to_bottom,#6366f1_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+    </div>
 
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-            Asisten Pintar <br class="hidden sm:inline" />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600">
-              Informasi Akademik
-            </span> Kampus
-          </h1>
-
-          <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
-            Solusi cepat dan terpusat bagi mahasiswa untuk menemukan informasi jadwal, kalender akademik, KRS, dan prosedur administrasi BAAK secara instan tanpa antrean.
-          </p>
-
-          <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-            <a href="#chat-demo" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-lg shadow-indigo-200 transition-all flex items-center space-x-2">
-              <i class="fa-solid fa-comments"></i>
-              <span>Coba Demo Chatbot</span>
-            </a>
-            <a href="#api-tester" class="px-6 py-3.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold border border-slate-300 shadow-sm transition-all flex items-center space-x-2">
-              <i class="fa-solid fa-code"></i>
-              <span>Uji Endpoint REST API</span>
-            </a>
-          </div>
-
-          <!-- Quick Metrics Bar (from PRD) -->
-          <div class="mt-10 pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-center lg:text-left">
-            <div>
-              <p class="text-2xl font-black text-indigo-600">&lt; 3 Detik</p>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">Target Respon Jawaban</p>
-            </div>
-            <div>
-              <p class="text-2xl font-black text-indigo-600">100%</p>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">Penanganan Fallback</p>
-            </div>
-            <div>
-              <p class="text-2xl font-black text-indigo-600">24/7</p>
-              <p class="text-xs text-slate-500 font-medium mt-0.5">Akses Mandiri Mahasiswa</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Hero Visual Graphic -->
-        <div class="lg:col-span-5 relative">
-          <div class="relative mx-auto max-w-md lg:max-w-none">
-            <!-- Decorative Glow Background -->
-            <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur-2xl opacity-20 transform -rotate-1"></div>
-            
-            <!-- Hero Image Card -->
-            <div class="relative bg-white p-3 rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" 
-                alt="Mahasiswa berkonsultasi akademik" 
-                class="w-full h-80 object-cover rounded-2xl"
-              />
-              
-              <!-- Floating Badge 1: Bot Response -->
-              <div class="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-3.5 py-2.5 rounded-xl shadow-lg border border-slate-100 flex items-center space-x-2.5 animate-bounce" style="animation-duration: 4s;">
-                <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs">
-                  <i class="fa-solid fa-robot"></i>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-slate-800">Alur KRS & Kalender</p>
-                  <p class="text-[10px] text-emerald-600 font-semibold flex items-center">
-                    <i class="fa-solid fa-check-circle mr-1"></i> Terverifikasi BAAK
-                  </p>
-                </div>
-              </div>
-
-              <!-- Floating Badge 2: Quick Status -->
-              <div class="absolute bottom-6 right-6 bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-lg text-white flex items-center space-x-2">
-                <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
-                <p class="text-xs font-medium">Asisten Aktif &bull; Siap Menjawab</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <!-- Hero Content (Netflix Center Style) -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+      
+      <!-- Academic Badge -->
+      <div class="inline-flex items-center space-x-2 px-4 py-1.5 mb-8 text-xs font-bold text-indigo-300 bg-indigo-950/80 rounded-full border border-indigo-700/60 shadow-xl backdrop-blur-md">
+        <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
+        <span>PAW WEEK 7 &bull; CHATBOT AKADEMIKA KAMPUS</span>
       </div>
+
+      <!-- Bold Cinematic Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight drop-shadow-2xl">
+        Informasi Akademik & KRS <br class="hidden sm:inline" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-indigo-300 to-purple-400">
+          Tanpa Batas Waktu.
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed drop-shadow">
+        Tanyakan jadwal kuliah, alur KRS, kalender akademik, dan berkas administrasi BAAK kapan saja. Solusi konsisten dengan respon cepat &lt; 3 detik.
+      </p>
+
+      <!-- Netflix-style Call-To-Action / Question Input Bar -->
+      <div class="mt-10 max-w-2xl mx-auto">
+        <p class="text-xs uppercase tracking-wider font-semibold text-slate-300 mb-3.5 flex items-center justify-center">
+          <i class="fa-solid fa-sparkles text-indigo-400 mr-2"></i>
+          Siap bertanya? Masukkan topik akademik Anda untuk mulai percakapan:
+        </p>
+
+        <form onsubmit="handleHeroSearch(event)" class="flex flex-col sm:flex-row gap-2.5 p-2 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-slate-700/80 shadow-2xl focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/30 transition-all">
+          <div class="flex-1 flex items-center px-4 py-2">
+            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-3"></i>
+            <input 
+              type="text" 
+              id="hero-input"
+              placeholder="Contoh: Bagaimana alur pengisian KRS? Kapan batas UKT?" 
+              class="w-full bg-transparent text-white placeholder-slate-400 text-sm focus:outline-none"
+            />
+          </div>
+          <button 
+            type="submit" 
+            class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/40 transition-all flex items-center justify-center space-x-2 group flex-shrink-0"
+          >
+            <span>Mulai Tanya</span>
+            <i class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+          </button>
+        </form>
+
+        <!-- Trending Academic Tags / Shortcuts -->
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
+          <span class="font-semibold text-slate-300 flex items-center">
+            <i class="fa-solid fa-fire text-amber-400 mr-1.5"></i> Populer:
+          </span>
+          <button onclick="quickHeroQuestion('Bagaimana alur pengisian KRS semester baru?')" class="bg-slate-900/80 hover:bg-indigo-600 hover:text-white text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/80 transition-colors shadow-sm">#AlurKRS</button>
+          <button onclick="quickHeroQuestion('Kapan batas pembayaran UKT & revisi KRS?')" class="bg-slate-900/80 hover:bg-indigo-600 hover:text-white text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/80 transition-colors shadow-sm">#BatasUKT</button>
+          <button onclick="quickHeroQuestion('Apa saja syarat pengajuan bebas pustaka?')" class="bg-slate-900/80 hover:bg-indigo-600 hover:text-white text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/80 transition-colors shadow-sm">#BebasPustaka</button>
+          <button onclick="quickHeroQuestion('Bagaimana prosedur pendaftaran yudisium?')" class="bg-slate-900/80 hover:bg-indigo-600 hover:text-white text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700/80 transition-colors shadow-sm">#Yudisium</button>
+        </div>
+      </div>
+
+      <!-- Bottom Quick Stats Row (Based on PRD Metrics) -->
+      <div class="mt-14 pt-8 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border border-slate-800/80">
+          <p class="text-2xl font-black text-indigo-400">&lt; 3 Detik</p>
+          <p class="text-xs text-slate-400 mt-1">Target Respon Jawaban</p>
+        </div>
+        <div class="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border border-slate-800/80">
+          <p class="text-2xl font-black text-indigo-400">100%</p>
+          <p class="text-xs text-slate-400 mt-1">Pesan Fallback Terkelola</p>
+        </div>
+        <div class="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border border-slate-800/80">
+          <p class="text-2xl font-black text-indigo-400">24/7</p>
+          <p class="text-xs text-slate-400 mt-1">Akses Mandiri Mahasiswa</p>
+        </div>
+        <div class="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border border-slate-800/80">
+          <p class="text-2xl font-black text-indigo-400">6 Modul</p>
+          <p class="text-xs text-slate-400 mt-1">Layanan BAAK Terintegrasi</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- Section: Fitur Utama (id="fitur" - Sesuai PRD F-01, F-02, F-03) -->
-  <section id="fitur" class="py-20 bg-white border-b border-slate-200">
+  <section id="fitur" class="py-24 bg-white border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-16">
+      
+      <!-- Section Title with AOS -->
+      <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
           Fitur & Spesifikasi PRD
         </span>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
-          Solusi Terarah Berdasarkan Kebutuhan Akademik
+          Transisi & Eksplorasi Fitur Utama Chatbot
         </h2>
         <p class="text-slate-600 text-base mt-3">
-          Dirancang untuk memecahkan masalah informasi yang tersebar dan mengurangi beban pertanyaan berulang pada bagian tata usaha kampus.
+          Klik tab di bawah untuk melihat animasi transisi dan cara kerja setiap fitur inti yang dirancang pada dokumen PRD.
         </p>
+
+        <!-- Interactive Animated Feature Tabs -->
+        <div class="mt-8 inline-flex p-1.5 bg-slate-100 rounded-2xl border border-slate-200 flex-wrap justify-center gap-1.5">
+          <button 
+            onclick="switchFeatureTab(1)" 
+            id="tab-btn-1" 
+            class="feature-tab-btn active px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-2 text-slate-600 hover:text-indigo-600"
+          >
+            <i class="fa-solid fa-brain"></i>
+            <span>F-01: Pencocokan AIML</span>
+          </button>
+          <button 
+            onclick="switchFeatureTab(2)" 
+            id="tab-btn-2" 
+            class="feature-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-2 text-slate-600 hover:text-indigo-600"
+          >
+            <i class="fa-solid fa-bolt"></i>
+            <span>F-02: Shortcut Populer</span>
+          </button>
+          <button 
+            onclick="switchFeatureTab(3)" 
+            id="tab-btn-3" 
+            class="feature-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-2 text-slate-600 hover:text-indigo-600"
+          >
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>F-03: Pesan Fallback BAAK</span>
+          </button>
+        </div>
       </div>
 
+      <!-- Animated Feature Showcase Display (Switches with smooth fade & slide) -->
+      <div class="mb-16 max-w-5xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        
+        <!-- Tab Pane 1: F-01 AIML Matching -->
+        <div id="tab-pane-1" class="tab-pane tab-content-enter bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-indigo-800/50">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7">
+              <span class="px-3 py-1 bg-indigo-500/30 text-indigo-300 text-xs font-bold rounded-full border border-indigo-400/30">
+                Fitur Inti &bull; Prioritas: Must
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-3">
+                Mesin Pencocokan Pola Kata Kunci AIML
+              </h3>
+              <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+                Setiap pesan mahasiswa dipindai terhadap basis pengetahuan aturan kampus. Pertanyaan tentang "krs", "isi krs", atau "syarat skripsi" langsung dipetakan ke jawaban resmi dalam waktu <strong>&lt; 3 detik</strong>.
+              </p>
+              
+              <div class="mt-6 flex flex-wrap gap-2 text-xs">
+                <span class="bg-indigo-950/80 text-indigo-300 px-3 py-1.5 rounded-lg border border-indigo-700/60 font-mono">
+                  Input: "jadwal krs" &rarr; Cocok dengan [Pattern: krs] &rarr; Output Respon BAAK
+                </span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-slate-950/80 p-5 rounded-2xl border border-indigo-500/30 shadow-inner">
+              <div class="flex items-center justify-between text-xs text-indigo-300 pb-3 border-b border-slate-800">
+                <span class="font-mono flex items-center"><i class="fa-solid fa-code mr-1.5"></i> AIML Logic Simulator</span>
+                <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check mr-1"></i> Active</span>
+              </div>
+              <div class="mt-4 space-y-2 text-xs font-mono">
+                <div class="p-2.5 rounded-lg bg-indigo-900/40 text-indigo-200 border border-indigo-800/40">
+                  <span class="text-slate-400">// Pertanyaan Mahasiswa:</span><br/>
+                  &gt; "Bagaimana alur isi KRS?"
+                </div>
+                <div class="p-2.5 rounded-lg bg-emerald-950/40 text-emerald-300 border border-emerald-800/40">
+                  <span class="text-slate-400">// Pola Terdeteksi:</span><br/>
+                  MATCH: ["krs", "alur krs"] &bull; Delay: 420ms
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Pane 2: F-02 Shortcut Questions -->
+        <div id="tab-pane-2" class="tab-pane hidden tab-content-enter bg-gradient-to-br from-purple-900 to-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-purple-800/50">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7">
+              <span class="px-3 py-1 bg-purple-500/30 text-purple-300 text-xs font-bold rounded-full border border-purple-400/30">
+                Akses Instan &bull; Prioritas: Should
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-3">
+                Shortcut Pertanyaan Populer Sekali Klik
+              </h3>
+              <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+                Mahasiswa baru tidak perlu bingung menyusun kalimat formal. Cukup klik tombol pertanyaan yang sering ditanyakan, dan bot akan langsung merespons informasi terkait.
+              </p>
+              
+              <div class="mt-6 flex flex-wrap gap-2">
+                <button onclick="sendQuickQuestion('Bagaimana alur pengisian KRS semester baru?'); document.getElementById('chat-demo').scrollIntoView({behavior: 'smooth'});" class="px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow transition-all">
+                  Coba: Alur Pengisian KRS &rarr;
+                </button>
+                <button onclick="sendQuickQuestion('Kapan batas pembayaran UKT & revisi KRS?'); document.getElementById('chat-demo').scrollIntoView({behavior: 'smooth'});" class="px-3.5 py-1.5 rounded-lg bg-purple-950/80 hover:bg-purple-800 text-purple-200 text-xs font-semibold border border-purple-700/60 transition-all">
+                  Coba: Batas UKT &rarr;
+                </button>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-slate-950/80 p-5 rounded-2xl border border-purple-500/30 shadow-inner">
+              <p class="text-xs text-purple-300 font-semibold mb-3">Simulasi Klik Shortcut:</p>
+              <div class="space-y-2">
+                <div class="p-3 bg-purple-950/60 rounded-xl border border-purple-800/50 flex items-center justify-between text-xs text-purple-200">
+                  <span>Alur Pengisian KRS</span>
+                  <i class="fa-solid fa-arrow-turn-down text-purple-400"></i>
+                </div>
+                <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs text-slate-300">
+                  <span class="text-emerald-400 font-semibold">Bot:</span> Menampilkan langkah 1-5 pengisian SIAKAD secara instan.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Pane 3: F-03 Fallback Message -->
+        <div id="tab-pane-3" class="tab-pane hidden tab-content-enter bg-gradient-to-br from-amber-950/90 via-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-amber-800/50">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7">
+              <span class="px-3 py-1 bg-amber-500/30 text-amber-300 text-xs font-bold rounded-full border border-amber-400/30">
+                Penanganan Error &bull; Prioritas: Must
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-white mt-3">
+                Pesan Fallback Cerdas & Rekomendasi Loket
+              </h3>
+              <p class="mt-3 text-slate-300 text-sm sm:text-base leading-relaxed">
+                Mencegah misinformasi atau jawaban mengada-ada. Ketika topik berada di luar cakupan AIML, bot mengarahkan mahasiswa dengan panduan kata kunci alternatif atau kontak langsung ke staf BAAK.
+              </p>
+              
+              <div class="mt-6 p-3 bg-amber-950/50 rounded-xl border border-amber-700/40 text-xs text-amber-200 flex items-center space-x-2">
+                <i class="fa-solid fa-circle-exclamation text-amber-400 text-base"></i>
+                <span>Memenuhi Target Metrik M-02: 100% pertanyaan uji luar cakupan ditangani fallback.</span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-slate-950/80 p-5 rounded-2xl border border-amber-500/30 shadow-inner">
+              <div class="text-xs text-slate-400 mb-2 font-mono">// Contoh Pesan Fallback:</div>
+              <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-800 text-xs text-slate-300 leading-relaxed">
+                "Maaf, informasi untuk pertanyaan tersebut belum tersedia di basis pengetahuan kami. Silakan coba kata kunci lain atau hubungi staf BAAK di loket administrasi kampus."
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Feature Grid Cards with Staggered AOS Animations -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         
         <!-- Fitur 1: F-01 -->
-        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:-translate-y-2 hover:shadow-2xl hover:border-indigo-500/50 transition-all duration-300 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="100">
           <div class="h-48 overflow-hidden relative">
             <img 
               src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" 
@@ -196,7 +384,7 @@
         </div>
 
         <!-- Fitur 2: F-02 -->
-        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:-translate-y-2 hover:shadow-2xl hover:border-purple-500/50 transition-all duration-300 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="200">
           <div class="h-48 overflow-hidden relative">
             <img 
               src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" 
@@ -223,7 +411,7 @@
         </div>
 
         <!-- Fitur 3: F-03 -->
-        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+        <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 hover:-translate-y-2 hover:shadow-2xl hover:border-amber-500/50 transition-all duration-300 group flex flex-col justify-between" data-aos="fade-up" data-aos-delay="300">
           <div class="h-48 overflow-hidden relative">
             <img 
               src="https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80" 
@@ -254,17 +442,19 @@
   </section>
 
   <!-- Section: Target User / Persona (PRD Section 4) -->
-  <section id="persona" class="py-16 bg-slate-50 border-b border-slate-200">
+  <section id="persona" class="py-20 bg-slate-50 border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600">Persona & Stakeholder</span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-2">Target Pengguna Aplikasi</h2>
+      <div class="text-center max-w-2xl mx-auto mb-14" data-aos="fade-up">
+        <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
+          Persona & Stakeholder
+        </span>
+        <h2 class="text-3xl font-extrabold text-slate-900 mt-3">Target Pengguna Aplikasi</h2>
         <p class="text-slate-500 text-sm mt-2">Disesuaikan dengan analisis kebutuhan pengguna pada dokumen PRD.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <!-- Persona 1 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start space-x-5">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 flex items-start space-x-5" data-aos="fade-right" data-aos-duration="800">
           <img 
             src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80" 
             alt="Dimas Gonjales" 
@@ -281,7 +471,7 @@
         </div>
 
         <!-- Persona 2 -->
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-start space-x-5">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 flex items-start space-x-5" data-aos="fade-left" data-aos-duration="800">
           <img 
             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" 
             alt="Supri Sunandar" 
@@ -301,18 +491,18 @@
   </section>
 
   <!-- Section: Chatbot Demo Preview -->
-  <section id="chat-demo" class="py-20 bg-white border-b border-slate-200">
+  <section id="chat-demo" class="py-24 bg-white border-b border-slate-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-10">
+      <div class="text-center mb-10" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
           Simulasi Interaktif Mahasiswa
         </span>
-        <h2 class="text-3xl font-bold text-slate-900 mt-3">Pratinjau Percakapan Chatbot Akademika</h2>
+        <h2 class="text-3xl font-extrabold text-slate-900 mt-3">Pratinjau Percakapan Chatbot Akademika</h2>
         <p class="text-slate-500 text-sm mt-2">Mendukung pengiriman pertanyaan teks bebas serta pemilihan tombol shortcut pertanyaan populer.</p>
       </div>
 
       <!-- Chat Container -->
-      <div class="bg-slate-50 rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+      <div class="bg-slate-50 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden" data-aos="zoom-in" data-aos-duration="800">
         <!-- Chat Header -->
         <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-6 py-4 flex items-center justify-between">
           <div class="flex items-center space-x-3">
@@ -332,7 +522,7 @@
         <!-- Chat Messages Box -->
         <div id="chat-box" class="p-6 space-y-4 h-80 overflow-y-auto">
           <!-- Bot Welcome Message -->
-          <div class="flex items-start space-x-3">
+          <div class="flex items-start space-x-3 chat-bubble-enter">
             <div class="w-9 h-9 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-sm shadow">
               <i class="fa-solid fa-robot"></i>
             </div>
@@ -349,7 +539,7 @@
           </p>
           <div class="flex flex-wrap gap-2">
             <% popularQuestions.forEach(question => { %>
-              <button onclick="sendQuickQuestion('<%= question %>')" class="text-xs bg-white hover:bg-indigo-600 hover:text-white text-slate-700 px-3 py-1.5 rounded-lg border border-slate-300 transition-colors shadow-sm">
+              <button onclick="sendQuickQuestion('<%= question %>')" class="text-xs bg-white hover:bg-indigo-600 hover:text-white text-slate-700 px-3 py-1.5 rounded-lg border border-slate-300 transition-all duration-200 shadow-sm active:scale-95">
                 <%= question %>
               </button>
             <% }) %>
@@ -363,11 +553,11 @@
               type="text" 
               id="user-input" 
               placeholder="Ketik pertanyaan akademik Anda di sini (misal: syarat yudisium, batas ukt)..." 
-              class="flex-1 px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              class="flex-1 px-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
             />
             <button 
               type="submit" 
-              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl transition flex items-center space-x-2 shadow"
+              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-sm font-semibold rounded-xl transition-all flex items-center space-x-2 shadow"
             >
               <span>Kirim</span>
               <i class="fa-solid fa-paper-plane text-xs"></i>
@@ -379,9 +569,9 @@
   </section>
 
   <!-- Section: Data Produk / Layanan Akademik (Dynamic from Backend MVC) -->
-  <section id="produk" class="py-20 bg-slate-50 border-b border-slate-200">
+  <section id="produk" class="py-24 bg-slate-50 border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-14">
+      <div class="text-center max-w-2xl mx-auto mb-10" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
           Model Data Backend (MVC)
         </span>
@@ -391,9 +581,36 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <% products.forEach(product => { %>
-          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+      <!-- Interactive Animated Category Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12" data-aos="fade-up" data-aos-delay="100">
+        <button onclick="filterProducts('all', this)" class="product-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition-all duration-300">
+          Semua Modul
+        </button>
+        <button onclick="filterProducts('KRS & Perwalian', this)" class="product-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition-all duration-300">
+          KRS & Perwalian
+        </button>
+        <button onclick="filterProducts('Jadwal & Agenda', this)" class="product-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition-all duration-300">
+          Jadwal & Agenda
+        </button>
+        <button onclick="filterProducts('Administrasi', this)" class="product-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition-all duration-300">
+          Administrasi
+        </button>
+        <button onclick="filterProducts('Kelulusan', this)" class="product-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition-all duration-300">
+          Kelulusan
+        </button>
+        <button onclick="filterProducts('Kemahasiswaan', this)" class="product-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition-all duration-300">
+          Kemahasiswaan
+        </button>
+      </div>
+
+      <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% products.forEach((product, idx) => { %>
+          <div 
+            class="product-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:-translate-y-2 hover:shadow-2xl hover:border-indigo-500/50 transition-all duration-300 flex flex-col justify-between group" 
+            data-category="<%= product.kategori %>"
+            data-aos="fade-up" 
+            data-aos-delay="<%= (idx % 3) * 100 %>"
+          >
             
             <div>
               <!-- Visual Image for each product -->
@@ -441,9 +658,9 @@
   </section>
 
   <!-- Section: Live API Endpoint Tester -->
-  <section id="api-tester" class="py-20 bg-white border-b border-slate-200">
+  <section id="api-tester" class="py-24 bg-white border-b border-slate-200">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="text-center max-w-3xl mx-auto mb-14" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">
           REST API & Middleware Logger
         </span>
@@ -456,7 +673,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
         <!-- Card Endpoint 1: GET /api/status -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-aos="fade-right" data-aos-duration="700">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
               <div class="flex items-center space-x-2">
@@ -468,7 +685,7 @@
                 <a 
                   href="/api/status" 
                   target="_blank" 
-                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center space-x-1"
+                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1"
                   title="Buka response JSON mentah di tab baru"
                 >
                   <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
@@ -476,7 +693,7 @@
                 </a>
                 <button 
                   onclick="testApi('/api/status', 'status-output', 'status-badge')"
-                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow"
+                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow active:scale-95"
                 >
                   <i class="fa-solid fa-play text-[10px]"></i>
                   <span>Kirim Request</span>
@@ -499,7 +716,7 @@
         </div>
 
         <!-- Card Endpoint 2: GET /api/produk -->
-        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-aos="fade-left" data-aos-duration="700">
           <div>
             <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
               <div class="flex items-center space-x-2">
@@ -511,7 +728,7 @@
                 <a 
                   href="/api/produk" 
                   target="_blank" 
-                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition flex items-center space-x-1"
+                  class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition-all flex items-center space-x-1"
                   title="Buka response JSON mentah di tab baru"
                 >
                   <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
@@ -519,7 +736,7 @@
                 </a>
                 <button 
                   onclick="testApi('/api/produk', 'produk-output', 'produk-badge')"
-                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition flex items-center space-x-1.5 shadow"
+                  class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition-all flex items-center space-x-1.5 shadow active:scale-95"
                 >
                   <i class="fa-solid fa-play text-[10px]"></i>
                   <span>Kirim Request</span>
@@ -544,7 +761,7 @@
       </div>
 
       <!-- Panduan Pengujian Terminal / Postman -->
-      <div class="mt-8 bg-indigo-50/70 border border-indigo-200 rounded-2xl p-6">
+      <div class="mt-8 bg-indigo-50/70 border border-indigo-200 rounded-2xl p-6" data-aos="fade-up" data-aos-duration="700">
         <h4 class="text-sm font-bold text-indigo-900 flex items-center">
           <i class="fa-solid fa-terminal mr-2 text-indigo-600"></i>
           Catatan Verifikasi Middleware Logger di Terminal:
@@ -561,9 +778,9 @@
   </section>
 
   <!-- Section: Tim Pengembang (Based on PRD Header) -->
-  <section id="tim" class="py-20 bg-slate-50">
+  <section id="tim" class="py-24 bg-slate-50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
           Kolaborasi & Penulis PRD
         </span>
@@ -575,7 +792,11 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <% teamMembers.forEach((member, idx) => { %>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex items-center space-x-3.5">
+          <div 
+            class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex items-center space-x-3.5"
+            data-aos="zoom-in"
+            data-aos-delay="<%= idx * 60 %>"
+          >
             <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white font-bold flex items-center justify-center text-sm shadow-md flex-shrink-0">
               <%= member.name.charAt(0) %>
             </div>
@@ -607,6 +828,83 @@
 
   <!-- Frontend Logic Scripts -->
   <script>
+    // Transisi Tab Fitur Utama (F-01, F-02, F-03)
+    function switchFeatureTab(tabIndex) {
+      // Sembunyikan semua tab pane
+      const panes = document.querySelectorAll('.tab-pane');
+      panes.forEach(pane => {
+        pane.classList.add('hidden');
+        pane.classList.remove('tab-content-enter');
+      });
+
+      // Tampilkan tab pane terpilih dengan animasi
+      const activePane = document.getElementById(`tab-pane-${tabIndex}`);
+      if (activePane) {
+        activePane.classList.remove('hidden');
+        // Trigger ulang animasi class
+        void activePane.offsetWidth;
+        activePane.classList.add('tab-content-enter');
+      }
+
+      // Update state tombol tab
+      const buttons = document.querySelectorAll('.feature-tab-btn');
+      buttons.forEach((btn, idx) => {
+        if (idx + 1 === tabIndex) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    // Filter Kategori Produk dengan Animasi Halus
+    function filterProducts(category, clickedBtn) {
+      // Update styling tombol filter
+      const filterBtns = document.querySelectorAll('.product-filter-btn');
+      filterBtns.forEach(btn => {
+        btn.classList.remove('active', 'bg-indigo-600', 'text-white');
+        btn.classList.add('bg-white', 'text-slate-700');
+      });
+      if (clickedBtn) {
+        clickedBtn.classList.add('active', 'bg-indigo-600', 'text-white');
+        clickedBtn.classList.remove('bg-white', 'text-slate-700');
+      }
+
+      // Tampilkan / Sembunyikan kartu produk dengan efek transisi
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'all' || cardCategory === category) {
+          card.style.display = 'flex';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            card.style.transition = 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+            card.style.opacity = '1';
+            card.style.transform = 'scale(1)';
+          }, 50);
+        } else {
+          card.style.transition = 'all 0.25s ease';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.92)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 250);
+        }
+      });
+    }
+
+    // Inisialisasi AOS (Animate On Scroll)
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: false,
+        mirror: true,
+        offset: 80
+      });
+    });
+
     // Knowledge Base sederhana sesuai PRD (US-01, US-02, US-03)
     const knowledgeBase = [
       {
@@ -626,6 +924,41 @@
         answer: "Prosedur pendaftaran Yudisium: Lengkapi berkas bebas pustaka, transkrip nilai final tanpa nilai E, bukti skor TOEFL/TOEP min. 450, dan unggah formulir pendaftaran melalui loket BAAK."
       }
     ];
+
+    // Handler untuk search bar ala Netflix di Hero Section
+    function handleHeroSearch(e) {
+      e.preventDefault();
+      const heroInput = document.getElementById('hero-input');
+      const val = heroInput ? heroInput.value.trim() : '';
+      if (!val) return;
+
+      const userInput = document.getElementById('user-input');
+      if (userInput) userInput.value = val;
+
+      const chatDemo = document.getElementById('chat-demo');
+      if (chatDemo) {
+        chatDemo.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          handleChatSubmit(new Event('submit'));
+        }, 600);
+      }
+    }
+
+    function quickHeroQuestion(q) {
+      const heroInput = document.getElementById('hero-input');
+      if (heroInput) heroInput.value = q;
+
+      const userInput = document.getElementById('user-input');
+      if (userInput) userInput.value = q;
+
+      const chatDemo = document.getElementById('chat-demo');
+      if (chatDemo) {
+        chatDemo.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          handleChatSubmit(new Event('submit'));
+        }, 600);
+      }
+    }
 
     function handleChatSubmit(e) {
       e.preventDefault();
@@ -665,7 +998,7 @@
     function appendChatMessage(sender, text) {
       const box = document.getElementById('chat-box');
       const wrapper = document.createElement('div');
-      wrapper.className = `flex items-start space-x-3 ${sender === 'user' ? 'justify-end' : ''}`;
+      wrapper.className = `flex items-start space-x-3 chat-bubble-enter ${sender === 'user' ? 'justify-end' : ''}`;
 
       if (sender === 'user') {
         wrapper.innerHTML = `
