@@ -1,8 +1,9 @@
 /**
  * Entry Point Aplikasi Chatbot Akademika
- * Pengembangan Aplikasi Web (PAW) - Week 7
+ * Pengembangan Aplikasi Web (PAW) - Integrasi Database & CRUD
  */
 
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const appConfig = require('./config/appConfig');
@@ -28,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routing Aplikasi
 app.use('/', viewRoutes);       // Frontend EJS
-app.use('/api', apiRoutes);     // REST API Endpoints (/api/status, /api/produk)
+app.use('/api', apiRoutes);     // REST API Endpoints (/api/status, /api/faq)
 
 // Middleware 404 Handler
 app.use((req, res) => {
@@ -50,13 +51,13 @@ app.use((req, res) => {
 });
 
 // Jalankan Server
-const PORT = appConfig.PORT;
+const PORT = process.env.PORT || appConfig.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`====================================================`);
   console.log(`  🚀 Server ${appConfig.APP_NAME} Berhasil Dijalankan!`);
   console.log(`  🌐 Frontend URL : http://localhost:${PORT}`);
   console.log(`  🔌 API Status   : http://localhost:${PORT}/api/status`);
-  console.log(`  📦 API Produk   : http://localhost:${PORT}/api/produk`);
+  console.log(`  📦 API FAQ      : http://localhost:${PORT}/api/faq`);
   console.log(`  ⚙️  Environment  : ${appConfig.ENV}`);
   console.log(`====================================================`);
   console.log(`[LOGGER] Menunggu request masuk...\n`);
