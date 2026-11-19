@@ -52,18 +52,20 @@ app.use((req, res) => {
   }
 });
 
-// Jalankan Server
+// Jalankan Server jika dieksekusi langsung
 const PORT = process.env.PORT || appConfig.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`====================================================`);
-  console.log(`  🚀 Server ${appConfig.APP_NAME} Berhasil Dijalankan!`);
-  console.log(`  🌐 Frontend URL : http://localhost:${PORT}`);
-  console.log(`  🔌 API Status   : http://localhost:${PORT}/api/status`);
-  console.log(`  📦 API FAQ      : http://localhost:${PORT}/api/faq`);
-  console.log(`  🤖 API Chat AI  : http://localhost:${PORT}/api/chat`);
-  console.log(`  ⚙️  Environment  : ${appConfig.ENV}`);
-  console.log(`====================================================`);
-  console.log(`[LOGGER] Menunggu request masuk...\n`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`====================================================`);
+    console.log(`  🚀 Server ${appConfig.APP_NAME} Berhasil Dijalankan!`);
+    console.log(`  🌐 Frontend URL : http://localhost:${PORT}`);
+    console.log(`  🔌 API Status   : http://localhost:${PORT}/api/status`);
+    console.log(`  📦 API FAQ      : http://localhost:${PORT}/api/faq`);
+    console.log(`  🤖 API Chat AI  : http://localhost:${PORT}/api/chat`);
+    console.log(`  ⚙️  Environment  : ${appConfig.ENV}`);
+    console.log(`====================================================`);
+    console.log(`[LOGGER] Menunggu request masuk...\n`);
+  });
+}
 
 module.exports = app;
