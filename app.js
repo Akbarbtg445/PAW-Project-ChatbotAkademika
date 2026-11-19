@@ -10,6 +10,7 @@ const appConfig = require('./config/appConfig');
 const loggerMiddleware = require('./middlewares/loggerMiddleware');
 const viewRoutes = require('./routes/viewRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const chatRoutes = require('./routes/chat.routes');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routing Aplikasi
 app.use('/', viewRoutes);       // Frontend EJS
 app.use('/api', apiRoutes);     // REST API Endpoints (/api/status, /api/faq)
+app.use('/api', chatRoutes);    // AI Assistant Endpoint (/api/chat)
 
 // Middleware 404 Handler
 app.use((req, res) => {
@@ -58,6 +60,7 @@ app.listen(PORT, () => {
   console.log(`  🌐 Frontend URL : http://localhost:${PORT}`);
   console.log(`  🔌 API Status   : http://localhost:${PORT}/api/status`);
   console.log(`  📦 API FAQ      : http://localhost:${PORT}/api/faq`);
+  console.log(`  🤖 API Chat AI  : http://localhost:${PORT}/api/chat`);
   console.log(`  ⚙️  Environment  : ${appConfig.ENV}`);
   console.log(`====================================================`);
   console.log(`[LOGGER] Menunggu request masuk...\n`);
