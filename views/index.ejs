@@ -76,9 +76,9 @@
       </nav>
 
       <div class="flex items-center space-x-3">
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-400 border border-emerald-800/80 shadow-sm">
-          <span class="w-2 h-2 mr-2 bg-emerald-400 rounded-full animate-pulse"></span>
-          PostgreSQL Connected
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-950/80 text-indigo-300 border border-indigo-700/60 shadow-sm">
+          <span class="w-2 h-2 mr-2 bg-indigo-400 rounded-full animate-pulse"></span>
+          Gemini AI & PostgreSQL
         </span>
       </div>
     </div>
@@ -99,8 +99,8 @@
 
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
       <div class="inline-flex items-center space-x-2 px-4 py-1.5 mb-8 text-xs font-bold text-indigo-300 bg-indigo-950/80 rounded-full border border-indigo-700/60 shadow-xl backdrop-blur-md">
-        <i class="fa-solid fa-database text-indigo-400"></i>
-        <span>PAW CONTINUOUS PROJECT &bull; POSTGRESQL + FULL CRUD</span>
+        <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i>
+        <span>PAW CONTINUOUS PROJECT &bull; POSTGRESQL + GOOGLE GEMINI AI</span>
       </div>
 
       <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight drop-shadow-2xl">
@@ -192,42 +192,42 @@
     </div>
   </section>
 
-  <!-- Section: Chatbot Demo Preview (Terhubung ke Data PostgreSQL) -->
+  <!-- Section: Chatbot Demo Preview (Terhubung ke Google Gemini AI & PostgreSQL) -->
   <section id="chat-demo" class="py-20 bg-slate-50 border-b border-slate-200">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="text-center mb-10" data-aos="fade-up">
         <span class="text-xs uppercase tracking-wider font-bold text-indigo-600 bg-indigo-100/70 px-3 py-1 rounded-full">
-          Simulasi Interaktif Database
+          AI Assistant &bull; Google Gemini LLM
         </span>
-        <h2 class="text-3xl font-extrabold text-slate-900 mt-3">Pratinjau Percakapan Chatbot Akademika</h2>
-        <p class="text-slate-500 text-sm mt-2">Jawaban chatbot diambil secara dinamis dari tabel <code>faq_akademik</code> di PostgreSQL.</p>
+        <h2 class="text-3xl font-extrabold text-slate-900 mt-3">Percakapan AI Assistant Akademika</h2>
+        <p class="text-slate-500 text-sm mt-2">Ditenagai model <strong>Google Gemini</strong> dengan pembatasan berbasis konteks langsung dari tabel <code>faq_akademik</code> di database PostgreSQL.</p>
       </div>
 
       <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden" data-aos="zoom-in">
-        <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-6 py-4 flex items-center justify-between">
+        <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 text-white px-6 py-4 flex items-center justify-between">
           <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold">
               <i class="fa-solid fa-robot"></i>
             </div>
             <div>
-              <h3 class="font-semibold text-sm">Bot Akademika BAAK</h3>
+              <h3 class="font-semibold text-sm">AI Assistant Akademika BAAK</h3>
               <p class="text-xs text-indigo-200 flex items-center">
-                <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live Database Knowledge Base
+                <span class="w-2 h-2 mr-1.5 bg-emerald-400 rounded-full animate-ping"></span> Live Gemini AI & Knowledge Base
               </p>
             </div>
           </div>
-          <span class="text-xs bg-indigo-800/60 px-3 py-1 rounded-full border border-indigo-400/30" id="chat-kb-count">
-            <%= faqs.length %> Topik Aktif
+          <span class="text-xs bg-indigo-900/60 px-3 py-1 rounded-full border border-indigo-400/30" id="chat-kb-count">
+            <%= faqs.length %> Topik Basis Pengetahuan
           </span>
         </div>
 
-        <div id="chat-box" class="p-6 space-y-4 h-80 overflow-y-auto bg-slate-50">
+        <div id="chat-box" class="p-6 space-y-4 h-96 overflow-y-auto bg-slate-50">
           <div class="flex items-start space-x-3 chat-bubble-enter">
             <div class="w-9 h-9 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-sm shadow">
               <i class="fa-solid fa-robot"></i>
             </div>
             <div class="bg-white border border-slate-200 p-4 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700 leading-relaxed">
-              Halo! Saya <strong>Chatbot Akademika</strong>. Silakan ketik pertanyaan Anda atau pilih salah satu topik yang tersimpan di database PostgreSQL di bawah ini.
+              Halo! Saya <strong>AI Assistant Chatbot Akademika</strong>. Saya siap membantu menjawab pertanyaan seputar jadwal perkuliahan, alur pengisian KRS, kalender akademik, dan administrasi BAAK kampus berdasarkan data resmi database kami. Silakan ketik pertanyaan Anda!
             </div>
           </div>
         </div>
@@ -235,7 +235,7 @@
         <!-- Shortcut Pertanyaan Populer dari Database -->
         <div class="px-6 py-3 bg-indigo-50/80 border-t border-slate-200">
           <p class="text-xs font-semibold text-slate-600 mb-2 flex items-center">
-            <i class="fa-solid fa-bolt text-indigo-500 mr-1.5"></i> Pertanyaan Tersedia di Database:
+            <i class="fa-solid fa-bolt text-indigo-500 mr-1.5"></i> Pertanyaan Cepat:
           </p>
           <div id="chat-shortcuts" class="flex flex-wrap gap-2">
             <% popularQuestions.forEach(question => { %>
@@ -251,15 +251,18 @@
             <input 
               type="text" 
               id="user-input" 
-              placeholder="Ketik kata kunci pertanyaan (misal: KRS, UKT, Wisuda)..." 
+              placeholder="Tanyakan jadwal kuliah, alur KRS, UKT, atau administrasi BAAK..." 
               class="flex-1 px-4 py-2.5 text-sm text-slate-800 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              maxlength="1000"
+              required
             />
             <button 
               type="submit" 
-              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl transition-all flex items-center space-x-2 shadow"
+              id="btn-send-chat"
+              class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 text-white text-sm font-semibold rounded-xl transition-all flex items-center space-x-2 shadow"
             >
-              <span>Kirim</span>
-              <i class="fa-solid fa-paper-plane text-xs"></i>
+              <span id="btn-send-text">Kirim</span>
+              <i id="btn-send-icon" class="fa-solid fa-paper-plane text-xs"></i>
             </button>
           </form>
         </div>
@@ -439,7 +442,7 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- GET /api/status -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
           <div>
@@ -449,10 +452,7 @@
                 <code class="text-sm font-bold text-slate-800">/api/status</code>
               </div>
               <div class="flex items-center space-x-2">
-                <a href="/api/status" target="_blank" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg">
-                  Buka Raw URL
-                </a>
-                <button onclick="testApi('/api/status', 'status-output', 'status-badge')" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg">
+                <button onclick="testApi('/api/status', 'status-output', 'status-badge')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm">
                   Kirim Request
                 </button>
               </div>
@@ -474,10 +474,7 @@
                 <code class="text-sm font-bold text-slate-800">/api/faq</code>
               </div>
               <div class="flex items-center space-x-2">
-                <a href="/api/faq" target="_blank" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg">
-                  Buka Raw URL
-                </a>
-                <button onclick="testApi('/api/faq', 'faq-output', 'faq-badge')" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg">
+                <button onclick="testApi('/api/faq', 'faq-output', 'faq-badge')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm">
                   Kirim Request
                 </button>
               </div>
@@ -488,6 +485,35 @@
             </div>
           </div>
           <pre id="faq-output" class="bg-slate-900 text-emerald-400 p-4 rounded-xl text-xs overflow-x-auto h-48 font-mono">// Klik "Kirim Request" untuk mengambil data dari PostgreSQL</pre>
+        </div>
+
+        <!-- POST /api/chat (AI Assistant) -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-1 text-xs font-black bg-indigo-600 text-white rounded-md">POST</span>
+                <code class="text-sm font-bold text-slate-800">/api/chat</code>
+              </div>
+              <button onclick="testChatApi()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm">
+                Kirim Chat
+              </button>
+            </div>
+            <div class="mb-2">
+              <input 
+                type="text" 
+                id="test-chat-input" 
+                value="Kapan jadwal pengisian KRS semester baru?" 
+                placeholder="Ketik pertanyaan untuk diuji..." 
+                class="w-full px-2.5 py-1.5 text-xs text-slate-800 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              />
+            </div>
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span>Response JSON (Gemini AI):</span>
+              <span id="chat-badge" class="text-slate-400">Belum diuji</span>
+            </div>
+          </div>
+          <pre id="chat-output" class="bg-slate-900 text-indigo-300 p-4 rounded-xl text-xs overflow-x-auto h-48 font-mono">// Klik "Kirim Chat" untuk menguji endpoint POST /api/chat</pre>
         </div>
       </div>
     </div>
@@ -757,7 +783,7 @@
     }
 
     // ==========================================
-    // 2. LOGIKA CHATBOT (MENGGUNAKAN DATA DB)
+    // 2. LOGIKA CHATBOT AI (TERINTEGRASI DENGAN GOOGLE GEMINI & POSTGRESQL)
     // ==========================================
 
     function handleHeroSearch(e) {
@@ -770,56 +796,129 @@
       if (userInput) userInput.value = val;
 
       document.getElementById('chat-demo').scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => handleChatSubmit(new Event('submit')), 500);
+      setTimeout(() => handleChatSubmit(null), 500);
     }
 
-    function handleChatSubmit(e) {
-      e.preventDefault();
+    async function handleChatSubmit(e) {
+      if (e) e.preventDefault();
       const input = document.getElementById('user-input');
-      const text = input.value.trim();
+      const sendBtn = document.getElementById('btn-send-chat');
+      const sendText = document.getElementById('btn-send-text');
+      const sendIcon = document.getElementById('btn-send-icon');
+
+      const text = input ? input.value.trim() : '';
       if (!text) return;
 
+      // 1. Tampilkan pesan pengguna di antarmuka percakapan
       appendChatMessage('user', text);
-      input.value = '';
+      if (input) input.value = '';
 
-      setTimeout(() => {
-        const reply = findAnswerFromDb(text);
-        appendChatMessage('bot', reply);
-      }, 400);
+      // 2. Nonaktifkan kontrol form dan tampilkan animasi loading
+      if (sendBtn) sendBtn.disabled = true;
+      if (sendText) sendText.innerText = 'Memproses...';
+      if (sendIcon) sendIcon.className = 'fa-solid fa-spinner fa-spin text-xs';
+      if (input) input.disabled = true;
+
+      showChatLoading();
+
+      try {
+        // 3. Kirim pertanyaan ke backend melalui Fetch API (POST /api/chat)
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: text })
+        });
+
+        const result = await response.json();
+        hideChatLoading();
+
+        if (response.ok && result.success) {
+          const replyText = (result.data && result.data.reply) ? result.data.reply : 'Tidak ada respon yang diterima.';
+          appendChatMessage('bot', formatAiResponse(replyText));
+        } else {
+          // Tangani validasi gagal, prompt injection, atau error dari backend
+          const errorMsg = result.message || 'Terjadi kendala saat memproses pertanyaan Anda.';
+          appendChatMessage('bot', `
+            <div class="text-rose-600 flex items-start space-x-2">
+              <i class="fa-solid fa-circle-exclamation mt-0.5 text-rose-500"></i>
+              <span>${escapeHtml(errorMsg)}</span>
+            </div>
+          `);
+        }
+      } catch (err) {
+        hideChatLoading();
+        console.error('Chat request error:', err);
+        appendChatMessage('bot', `
+          <div class="text-rose-600 flex items-start space-x-2">
+            <i class="fa-solid fa-triangle-exclamation mt-0.5 text-rose-500"></i>
+            <span>Gagal terhubung ke server backend: ${escapeHtml(err.message)}</span>
+          </div>
+        `);
+      } finally {
+        // 4. Pulihkan kontrol input dan tombol kirim
+        if (sendBtn) sendBtn.disabled = false;
+        if (sendText) sendText.innerText = 'Kirim';
+        if (sendIcon) sendIcon.className = 'fa-solid fa-paper-plane text-xs';
+        if (input) {
+          input.disabled = false;
+          input.focus();
+        }
+      }
     }
 
     function sendQuickQuestion(questionText) {
-      appendChatMessage('user', questionText);
-      setTimeout(() => {
-        const reply = findAnswerFromDb(questionText);
-        appendChatMessage('bot', reply);
-      }, 400);
+      const input = document.getElementById('user-input');
+      if (input) input.value = questionText;
+      document.getElementById('chat-demo').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => handleChatSubmit(null), 300);
     }
 
-    function findAnswerFromDb(query) {
-      const lower = query.toLowerCase();
+    function showChatLoading() {
+      hideChatLoading();
+      const box = document.getElementById('chat-box');
+      const bubble = document.createElement('div');
+      bubble.id = 'chat-loading-bubble';
+      bubble.className = 'flex items-start space-x-3 chat-bubble-enter';
+      bubble.innerHTML = `
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold shadow animate-pulse">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div class="bg-white border border-slate-200 p-3.5 rounded-2xl rounded-tl-none shadow-sm text-sm text-slate-600 flex items-center space-x-2">
+          <span class="text-xs font-medium text-slate-500">Gemini AI sedang memproses context...</span>
+          <span class="inline-flex space-x-1 items-center ml-1">
+            <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+          </span>
+        </div>
+      `;
+      box.appendChild(bubble);
+      box.scrollTop = box.scrollHeight;
+    }
 
-      // 1. Cek kecocokan langsung dengan pertanyaan atau kategori di database PostgreSQL
-      const exactOrPartial = faqData.find(item =>
-        item.pertanyaan.toLowerCase().includes(lower) ||
-        lower.includes(item.pertanyaan.toLowerCase()) ||
-        lower.includes(item.kategori.toLowerCase())
-      );
-      if (exactOrPartial) {
-        return `<span class="inline-block px-2 py-0.5 mb-1 text-[11px] font-bold bg-indigo-100 text-indigo-700 rounded">${escapeHtml(exactOrPartial.kategori)}</span><br>${escapeHtml(exactOrPartial.jawaban)}`;
-      }
+    function hideChatLoading() {
+      const loading = document.getElementById('chat-loading-bubble');
+      if (loading) loading.remove();
+    }
 
-      // 2. Cek kecocokan per kata kunci (minimal 3 huruf) terhadap pertanyaan di database
-      const keywords = lower.split(/\s+/).filter(w => w.length >= 3);
-      const keywordMatch = faqData.find(item =>
-        keywords.some(kw => item.pertanyaan.toLowerCase().includes(kw) || item.kategori.toLowerCase().includes(kw))
-      );
-      if (keywordMatch) {
-        return `<span class="inline-block px-2 py-0.5 mb-1 text-[11px] font-bold bg-indigo-100 text-indigo-700 rounded">${escapeHtml(keywordMatch.kategori)}</span><br>${escapeHtml(keywordMatch.jawaban)}`;
-      }
+    function formatAiResponse(raw) {
+      if (!raw) return '';
+      // Escape HTML dasar untuk keamanan
+      let safe = escapeHtml(raw);
 
-      // 3. Fallback message
-      return "Maaf, informasi untuk pertanyaan tersebut belum tersedia di database FAQ kami. Anda dapat menambahkannya melalui panel <strong>Manajemen Knowledge Base FAQ</strong> di bawah atau menghubungi loket BAAK.";
+      // Format bold markdown (**teks** -> <strong>teks</strong>)
+      safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900">$1</strong>');
+
+      // Format list item dengan bullet point
+      safe = safe.replace(/^[\*\-]\s+(.*)$/gm, '<div class="flex items-start space-x-1.5 my-1"><span class="text-indigo-600 font-bold">•</span><span>$1</span></div>');
+
+      // Format baris baru
+      safe = safe.replace(/\n\n/g, '<div class="h-2"></div>');
+      safe = safe.replace(/\n/g, '<br>');
+
+      return safe;
     }
 
     function appendChatMessage(sender, htmlContent) {
@@ -838,10 +937,10 @@
         `;
       } else {
         wrapper.innerHTML = `
-          <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold shadow">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex-shrink-0 flex items-center justify-center text-xs font-bold shadow">
             <i class="fa-solid fa-robot"></i>
           </div>
-          <div class="bg-white border border-slate-200 p-3.5 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700 leading-relaxed">
+          <div class="bg-white border border-slate-200 p-3.5 rounded-2xl rounded-tl-none shadow-sm max-w-lg text-sm text-slate-700 leading-relaxed space-y-1">
             ${htmlContent}
           </div>
         `;
@@ -867,6 +966,37 @@
         const data = await res.json();
 
         badgeElem.innerHTML = `<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${res.status} OK (${duration}ms)</span>`;
+        outputElem.innerText = JSON.stringify(data, null, 2);
+      } catch (err) {
+        badgeElem.innerHTML = `<span class="text-rose-600 font-bold">Error</span>`;
+        outputElem.innerText = `Error: ${err.message}`;
+      }
+    }
+
+    async function testChatApi() {
+      const input = document.getElementById('test-chat-input');
+      const outputElem = document.getElementById('chat-output');
+      const badgeElem = document.getElementById('chat-badge');
+      const message = input ? input.value.trim() : '';
+
+      badgeElem.innerHTML = `<span class="text-amber-500 font-semibold">Mengirim ke Gemini...</span>`;
+      outputElem.innerText = '// Mengirim permintaan ke backend POST /api/chat...\n// Menyiapkan context database dan menjalankan inferensi Gemini LLM...';
+
+      const t0 = performance.now();
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+        const duration = Math.round(performance.now() - t0);
+        const data = await res.json();
+
+        if (res.ok) {
+          badgeElem.innerHTML = `<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${res.status} OK (${duration}ms)</span>`;
+        } else {
+          badgeElem.innerHTML = `<span class="text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-200">${res.status} Error (${duration}ms)</span>`;
+        }
         outputElem.innerText = JSON.stringify(data, null, 2);
       } catch (err) {
         badgeElem.innerHTML = `<span class="text-rose-600 font-bold">Error</span>`;
