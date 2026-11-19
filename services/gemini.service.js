@@ -2,10 +2,11 @@
  * Gemini Service
  * Mengelola komunikasi dengan Google Gemini API dengan pembatasan berbasis konteks:
  * - Sumber data dari database PostgreSQL (tabel faq_akademik)
+ * - Multi-model fallback (gemini-3-flash-preview, gemini-3.5-flash, gemini-flash-latest)
  * - System Instruction untuk pembatasan ruang lingkup domain akademik
  * - AI Guardrail dan penolakan sopan untuk pertanyaan di luar konteks
  * - Pencegahan halusinasi dan proteksi prompt injection
- * - Penanganan error dan fallback ketika API bermasalah
+ * - Database Grounding Fallback jika terjadi spike permintaan (503/429) pada Google Gemini
  */
 
 const { genAI, modelName, apiKey } = require('../config/gemini');
@@ -54,18 +55,26 @@ const geminiService = {
     try {
       const faqs = await FaqModel.getAll();
       if (!faqs || faqs.length === 0) {
-        return 'Saat ini belum ada data FAQ khusus di database PostgreSQL. Anda dapat merujuk pada prosedur umum BAAK kampus.';
+        return {
+          contextText: 'Saat ini belum ada data FAQ khusus di database PostgreSQL. Anda dapat merujuk pada prosedur umum BAAK kampus.',
+          rawFaqs: []
+        };
       }
 
-      return faqs.map((faq, index) => {
+      const contextText = faqs.map((faq, index) => {
         return `[Data ${index + 1}]
 Kategori: ${faq.kategori}
 Pertanyaan Umum: ${faq.pertanyaan}
 Jawaban Resmi: ${faq.jawaban}`;
       }).join('\n\n');
+
+      return { contextText, rawFaqs: faqs };
     } catch (error) {
       console.warn('[GEMINI SERVICE] Gagal mengambil data FAQ dari database:', error.message);
-      return 'Catatan: Koneksi database sedang tidak stabil. Gunakan informasi umum seputar layanan BAAK, pengisian KRS, dan jadwal akademik kampus.';
+      return {
+        contextText: 'Catatan: Koneksi database sedang tidak stabil. Gunakan informasi umum seputar layanan BAAK, pengisian KRS, dan jadwal akademik kampus.',
+        rawFaqs: []
+      };
     }
   },
 
@@ -110,54 +119,81 @@ ATURAN PERILAKU & AI GUARDRAILS:
       return 'Layanan AI Assistant belum dapat terhubung karena GEMINI_API_KEY belum disetel pada file .env backend. Silakan masukkan API Key Google Gemini Anda pada file .env.';
     }
 
-    try {
-      // 3. Ambil context dinamis dari database PostgreSQL
-      const knowledgeContext = await geminiService.getKnowledgeContext();
+    // 3. Ambil context dinamis dari database PostgreSQL
+    const { contextText, rawFaqs } = await geminiService.getKnowledgeContext();
 
-      // 4. Susun System Instruction berbasis context
-      const systemInstruction = geminiService.buildSystemInstruction(knowledgeContext);
+    // 4. Susun System Instruction berbasis context
+    const systemInstruction = geminiService.buildSystemInstruction(contextText);
 
-      // 5. Inisialisasi model dengan System Instruction
-      const model = genAI.getGenerativeModel({
-        model: modelName,
-        systemInstruction: systemInstruction
-      });
+    // 5. Daftar model Gemini untuk fallback jika model utama sedang overload (503/429)
+    const candidateModels = [
+      process.env.GEMINI_MODEL,
+      'gemini-3-flash-preview',
+      'gemini-3.5-flash',
+      'gemini-flash-latest',
+      'gemini-3.8-flash'
+    ].filter(Boolean);
 
-      // 6. Kirim permintaan ke Gemini
-      const result = await model.generateContent({
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: userMessage }]
+    // Hilangkan duplikasi model
+    const uniqueModels = [...new Set(candidateModels)];
+
+    let lastError = null;
+
+    for (const modelToTry of uniqueModels) {
+      try {
+        const model = genAI.getGenerativeModel({
+          model: modelToTry,
+          systemInstruction: systemInstruction
+        });
+
+        const result = await model.generateContent({
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: userMessage }]
+            }
+          ],
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 800,
           }
-        ],
-        generationConfig: {
-          temperature: 0.3, // Temperatur rendah untuk meminimalkan halusinasi dan menjaga konsistensi
-          maxOutputTokens: 800,
+        });
+
+        const response = await result.response;
+        const replyText = response.text();
+
+        if (replyText && replyText.trim().length > 0) {
+          return replyText.trim();
         }
-      });
-
-      const response = await result.response;
-      const replyText = response.text();
-
-      if (!replyText || replyText.trim().length === 0) {
-        return 'Maaf, asisten AI tidak dapat menghasilkan jawaban untuk saat ini. Silakan coba ajukan pertanyaan dengan kalimat yang berbeda.';
+      } catch (error) {
+        lastError = error;
+        console.warn(`[GEMINI SERVICE] Model ${modelToTry} gagal (${error.status || error.message?.substring(0, 50)}), mencoba model alternatif...`);
       }
-
-      return replyText.trim();
-    } catch (error) {
-      console.error('[GEMINI SERVICE ERROR]:', error.message);
-
-      if (error.message && (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid'))) {
-        return 'API Key Gemini yang dikonfigurasikan tidak valid. Silakan periksa kembali pengaturan GEMINI_API_KEY di file .env Anda.';
-      }
-
-      if (error.message && (error.message.includes('quota') || error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('429'))) {
-        return 'Batas kuota harian untuk API Gemini telah tercapai saat ini. Silakan coba kembali beberapa saat lagi atau hubungi admin BAAK.';
-      }
-
-      return 'Mohon maaf, saat ini layanan AI Assistant sedang mengalami kendala teknis. Silakan coba kembali beberapa saat lagi.';
     }
+
+    console.error('[GEMINI SERVICE ERROR FINAL]:', lastError ? lastError.message : 'Semua model gagal');
+
+    // 6. Grounding Fallback: Jika seluruh endpoint Gemini sedang mengalami spike trafik tinggi (503),
+    // berikan jawaban langsung dari database PostgreSQL agar pengguna tetap terlayani dengan akurat
+    if (rawFaqs && rawFaqs.length > 0) {
+      const lower = userMessage.toLowerCase();
+      const matchedFaq = rawFaqs.find(f =>
+        f.pertanyaan.toLowerCase().includes(lower) ||
+        lower.includes(f.pertanyaan.toLowerCase()) ||
+        lower.includes(f.kategori.toLowerCase()) ||
+        lower.split(/\s+/).filter(w => w.length >= 4).some(w => f.pertanyaan.toLowerCase().includes(w) || f.jawaban.toLowerCase().includes(w))
+      );
+
+      if (matchedFaq) {
+        return `**${matchedFaq.kategori} - ${matchedFaq.pertanyaan}**\n\n${matchedFaq.jawaban}\n\n*(Informasi resmi bersumber langsung dari basis data BAAK kampus)*`;
+      }
+    }
+
+    if (lastError && (lastError.message.includes('API_KEY_INVALID') || lastError.message.includes('API key not valid'))) {
+      return 'API Key Gemini yang dikonfigurasikan tidak valid. Silakan periksa kembali pengaturan GEMINI_API_KEY di file .env Anda.';
+    }
+
+    return 'Mohon maaf, saat ini server AI Assistant sedang mengalami kepadatan lalu lintas (high traffic). Informasi yang Anda cari belum tercatat pada basis data FAQ saat ini. Silakan hubungi loket BAAK kampus atau coba beberapa saat lagi.';
   }
 };
 
