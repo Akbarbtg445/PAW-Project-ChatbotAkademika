@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Basis Pengetahuan AIML (Artificial Intelligence Markup Language)
+  Chatbot Akademika - Rule-Based Academic Assistant
+-->
+<aiml version="1.0">
+
+  <!-- Sapaan & Identitas Bot -->
+  <category>
+    <pattern>HALO</pattern>
+    <template>Halo! Saya Chatbot Akademika, asisten cerdas informasi akademik kampus. Ada yang bisa saya bantu seputar KRS, jadwal kuliah, atau administrasi BAAK?</template>
+  </category>
+
+  <category>
+    <pattern>HAI</pattern>
+    <template>Hai! Selamat datang di Chatbot Akademika. Silakan tanyakan informasi seputar kegiatan akademik kampus Anda.</template>
+  </category>
+
+  <category>
+    <pattern>SELAMAT PAGI</pattern>
+    <template>Selamat pagi! Ada informasi akademik kampus yang ingin Anda tanyakan hari ini?</template>
+  </category>
+
+  <category>
+    <pattern>SELAMAT SIANG</pattern>
+    <template>Selamat siang! Ada yang bisa saya bantu mengenai jadwal perkuliahan atau administrasi BAAK?</template>
+  </category>
+
+  <category>
+    <pattern>SELAMAT SORE</pattern>
+    <template>Selamat sore! Ada yang bisa dibantu seputar informasi akademik kampus?</template>
+  </category>
+
+  <category>
+    <pattern>SIAPA KAMU</pattern>
+    <template>Saya adalah Chatbot Akademika, aplikasi web asisten cerdas yang dirancang untuk membantu mahasiswa menemukan informasi akademik seperti alur KRS, kalender akademik, dan layanan administrasi kampus secara cepat dan akurat.</template>
+  </category>
+
+  <category>
+    <pattern>APA ITU CHATBOT AKADEMIKA</pattern>
+    <template>Chatbot Akademika adalah platform layanan informasi akademik mahasiswa berbasis web yang mengombinasikan pencocokan pola aturan AIML dan kecerdasan buatan berbasis database kampus.</template>
+  </category>
+
+  <!-- Layanan KRS (Kartu Rencana Studi) -->
+  <category>
+    <pattern>* ALUR KRS *</pattern>
+    <template>Alur pengisian KRS: (1) Selesaikan administrasi UKT semester, (2) Konsultasi rencana studi ke Dosen Pembimbing Akademik (DPA), (3) Login ke portal SIAKAD dan pilih mata kuliah, (4) Mintalah persetujuan DPA secara daring, (5) Unduh dan simpan bukti cetak KRS resmi.</template>
+  </category>
+
+  <category>
+    <pattern>* CARA ISI KRS *</pattern>
+    <template>Untuk mengisi KRS, pastikan UKT sudah lunas, buka portal akademik SIAKAD pada menu KRS Online, pilih kelas sesuai jadwal angkatan Anda, lalu ajukan validasi kepada Dosen Pembimbing Akademik (DPA).</template>
+  </category>
+
+  <category>
+    <pattern>* SYARAT KRS *</pattern>
+    <template>Syarat utama pengisian KRS adalah: (1) Status registrasi aktif semester berjalan, (2) Telah melunasi tagihan biaya perkuliahan/UKT, dan (3) Tidak sedang dalam status cuti akademik.</template>
+  </category>
+
+  <category>
+    <pattern>* BATAS KRS *</pattern>
+    <template>Batas waktu pengisian dan revisi KRS biasanya ditutup pada akhir minggu pertama perkuliahan semester baru sesuai kalender akademik resmi BAAK.</template>
+  </category>
+
+  <!-- Jadwal Kuliah & Kalender Akademik -->
+  <category>
+    <pattern>* JADWAL KULIAH *</pattern>
+    <template>Jadwal perkuliahan lengkap per semester dan pembagian ruang kelas dapat dilihat melalui portal mahasiswa SIAKAD pada menu Jadwal Perkuliahan atau papan pengumuman fakultas masing-masing.</template>
+  </category>
+
+  <category>
+    <pattern>* KALENDER AKADEMIK *</pattern>
+    <template>Kalender akademik resmi yang memuat tanggal penting perkuliahan, UTS, UAS, dan libur semester dapat diunduh melalui situs resmi kampus atau papan informasi BAAK.</template>
+  </category>
+
+  <!-- Perpustakaan & Bebas Pustaka -->
+  <category>
+    <pattern>* BEBAS PUSTAKA *</pattern>
+    <template>Syarat bebas pustaka: (1) Tidak memiliki tunggakan peminjaman buku fisik, (2) Menyerahkan softcopy skripsi/tugas akhir ke repositori perpustakaan, dan (3) Mengisi formulir verifikasi bebas pustaka di bagian sirkulasi perpustakaan pusat.</template>
+  </category>
+
+  <!-- Yudisium & Kelulusan -->
+  <category>
+    <pattern>* YUDISIUM *</pattern>
+    <template>Pendaftaran yudisium mensyaratkan: lulus semua mata kuliah wajib, IPK minimal sesuai ketentuan prodi, bebas tunggakan perpustakaan &amp; keuangan, serta naskah skripsi telah disetujui dewan penguji.</template>
+  </category>
+
+  <!-- BAAK & Layanan Administrasi -->
+  <category>
+    <pattern>* KONTAK BAAK *</pattern>
+    <template>Layanan Biro Administrasi Akademik dan Kemahasiswaan (BAAK) buka setiap hari Senin - Jumat pukul 08.00 - 16.00 WIB di Gedung Rektorat Lantai 1 atau melalui email baak@kampus.ac.id.</template>
+  </category>
+
+  <category>
+    <pattern>* LOKASI BAAK *</pattern>
+    <template>Kantor layanan BAAK berada di Gedung Rektorat Lantai 1, melayani administrasi berkas, legalisir ijazah, surat keterangan mahasiswa aktif, dan transkrip nilai.</template>
+  </category>
+
+  <category>
+    <pattern>* BAAK *</pattern>
+    <template>BAAK melayani berbagai urusan administrasi mahasiswa seperti surat keterangan aktif kuliah, legalisir dokumen, urusan KRS terhambat, dan pendaftaran wisuda/yudisium.</template>
+  </category>
+
+  <!-- Bantuan & Menu -->
+  <category>
+    <pattern>* BANTUAN *</pattern>
+    <template>Anda dapat menanyakan hal-hal berikut: alur pengisian KRS, syarat bebas pustaka, prosedur pendaftaran yudisium, jam layanan BAAK, atau kalender akademik.</template>
+  </category>
+
+</aiml>
