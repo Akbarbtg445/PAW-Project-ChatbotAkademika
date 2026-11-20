@@ -1,7 +1,7 @@
 # Chatbot Akademika (PAW-Project-ChatbotAkademika)
 
 **Tugas Praktikum Pengembangan Aplikasi Web (PAW) - Project Berkelanjutan (Week 7, Week 8, & Week 9)**  
-*Integrasi Generative AI Google Gemini, Database PostgreSQL, Full CRUD REST API, dan Arsitektur MVC*
+*Integrasi Generative AI Google Gemini, AIML Pattern Engine, Database PostgreSQL, Full CRUD REST API, dan Arsitektur MVC*
 
 ---
 
@@ -13,9 +13,11 @@
 - **Week 9 (Lanjutan):** Mengintegrasikan **Generative AI Google Gemini**, menerapkan **Context-Based AI Response** berbasis data riil dari PostgreSQL, menerapkan **Prompt Engineering & AI Guardrail** (defense in depth), menyediakan endpoint `POST /api/chat`, serta menghubungkannya ke antarmuka percakapan interaktif di frontend.
 
 ### Materi yang kedemo di project ini (Week 9):
-1. **Integrasi LLM di server (Gemini API):** API key aman di `.env`, frontend hanya berbicara ke Express backend.
-2. **Prompt engineering & guardrail:** Menolak pertanyaan di luar konteks aplikasi (misal minta kode game, resep, dsb.) dan mengarahkan kembali ke topik akademik.
-3. **Defense in depth:** Validasi ganda baik di level kode backend (`middlewares/validateChatInput.js`) maupun di level prompt instruksi sistem (`services/gemini.service.js`).
+1. **Arsitektur Hybrid (AIML + LLM):** Pertanyaan pengguna dicek terlebih dahulu ke AIML Pattern Engine (rule-based), jika tidak cocok baru di-fallback ke Google Gemini AI (generative). Setiap jawaban diberi badge sumber: `AIML Pattern Engine` atau `Google Gemini AI + PostgreSQL`.
+2. **Integrasi LLM di server (Gemini API):** API key aman di `.env`, frontend hanya berbicara ke Express backend.
+3. **Prompt engineering & guardrail:** Menolak pertanyaan di luar konteks aplikasi (misal minta kode game, resep, dsb.) dan mengarahkan kembali ke topik akademik.
+4. **Defense in depth:** Validasi ganda baik di level kode backend (`middlewares/validateChatInput.js`) maupun di level prompt instruksi sistem (`services/gemini.service.js`).
+5. **Autentikasi & Dasbor Admin BAAK:** Halaman login admin (`/login`) dan dasbor manajemen FAQ (`/admin`) untuk staff administrasi mengelola basis pengetahuan chatbot.
 
 ---
 
@@ -33,7 +35,7 @@
 
 ---
 
-## 📁 Struktur Folder Proyek (Pola MVC & Komponen Gemini AI)
+## 📁 Struktur Folder Proyek (Pola MVC, Komponen AIML & Gemini AI)
 
 ```text
 PAW-Project-ChatbotAkademika/
@@ -44,8 +46,11 @@ PAW-Project-ChatbotAkademika/
 │   └── gemini.js                   # Setup client Gemini (baca API key dari .env)
 ├── controllers/
 │   ├── apiController.js            # Controller REST API (/api/status & CRUD /api/faq)
-│   ├── chat.controller.js          # Controller endpoint chat ke bot (/api/chat)
-│   └── viewController.js           # Controller perenderan tampilan frontend (EJS) dari DB
+│   ├── chat.controller.js          # Controller endpoint chat hybrid AIML + Gemini (/api/chat)
+│   └── viewController.js           # Controller perenderan tampilan frontend EJS (Home, Login, Admin)
+├── data/
+│   └── aiml/
+│       └── akademik.aiml           # Basis pengetahuan AIML (19 kategori pattern-template XML)
 ├── middlewares/
 │   ├── loggerMiddleware.js         # Middleware logger pencatat HTTP request (GET, POST, PUT, DELETE)
 │   └── validateChatInput.js        # Validasi input chat (pesan kosong, panjang, anti-injection)
@@ -55,19 +60,23 @@ PAW-Project-ChatbotAkademika/
 ├── routes/
 │   ├── apiRoutes.js                # Routing endpoint REST API (/api/status & /api/faq)
 │   ├── chat.routes.js              # Routing endpoint AI Assistant (/api/chat)
-│   └── viewRoutes.js               # Halaman EJS, terpisah dari controller API
+│   └── viewRoutes.js               # Halaman EJS: Beranda (/), Login (/login), Dasbor Admin (/admin)
 ├── scripts/
 │   ├── init-db.js                  # Skrip pembuat tabel dan seed data awal PostgreSQL
+│   ├── test-aiml.js                # Skrip pengujian otomatis pencocokan pola aturan AIML
 │   └── test-endpoints.js           # Skrip pengujian otomatis seluruh endpoint
 ├── services/
-│   └── gemini.service.js           # BAGIAN INTI: System prompt + grounding DB + call Gemini
+│   ├── aiml.service.js             # ENGINE AIML: Parser XML & pattern matcher regex
+│   └── gemini.service.js           # ENGINE GEMINI: System prompt + grounding DB + call Gemini
 ├── utils/
 │   └── responseFormatter.js        # Utility pembantu format timestamp dan response
 ├── views/
-│   └── index.ejs                   # Antarmuka frontend (Chatbot AI + Manajemen CRUD FAQ)
+│   ├── admin.ejs                   # Dasbor Admin BAAK (Statistik, live search/filter, CRUD modal)
+│   ├── index.ejs                   # Antarmuka frontend mahasiswa (Chatbot Hybrid + CRUD FAQ + API tester)
+│   └── login.ejs                   # Halaman autentikasi portal login staff admin BAAK
 ├── db.sql                          # Skrip DDL & DML untuk import langsung di pgAdmin
 ├── .env                            # Variabel lingkungan & kredensial DB/API (ignored git)
-├── .env.example                    # Template variabel lingkungan untuk tim kolaborator
+├── .env.example                    # Template variabel lingkungan steril untuk kolaborator
 ├── .gitignore                      # Berkas pengecualian git (node_modules, .env, dll.)
 ├── package.json                    # Informasi proyek, dependensi, dan skrip npm
 └── README.md                       # Dokumentasi proyek
@@ -97,10 +106,12 @@ CREATE TABLE faq_akademik (
 
 ### Ringkasan Endpoint
 
-#### 1. Halaman Web & Status
+#### 1. Halaman Web, Portal Admin & Status
 | Method | Endpoint | Auth | Keterangan |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/` | Publik | Halaman utama antarmuka Chatbot Akademika & Manajemen FAQ |
+| `GET` | `/` | Publik | Halaman utama antarmuka Chatbot Akademika (Hybrid AI) & Demo CRUD |
+| `GET` | `/login` | Publik | Portal login khusus staff administrasi BAAK (Demo: `admin` / `admin123`) |
+| `GET` | `/admin` | Session | Dasbor manajemen data FAQ & monitoring status AI Grounding |
 | `GET` | `/api/status` | Publik | Mengembalikan status kesehatan server dan info aplikasi |
 
 #### 2. FAQ Akademik (Knowledge Base CRUD)
@@ -112,10 +123,10 @@ CREATE TABLE faq_akademik (
 | `PUT` | `/api/faq/:id` | Publik | `{ kategori, pertanyaan, jawaban }` | Memperbarui data FAQ berdasarkan ID |
 | `DELETE` | `/api/faq/:id` | Publik | - | Menghapus data FAQ berdasarkan ID |
 
-#### 3. Chat (AI Assistant Akademika)
+#### 3. Chat (Hybrid AI: AIML Engine + Google Gemini)
 | Method | Endpoint | Auth | Body | Keterangan |
 | :--- | :--- | :--- | :--- | :--- |
-| `POST` | `/api/chat` | Publik | `{ message }` | Mengirim pertanyaan mahasiswa ke AI Assistant Gemini |
+| `POST` | `/api/chat` | Publik | `{ message }` | Mengirim pertanyaan mahasiswa ke Hybrid Chatbot (AIML Layer 1 → Gemini Layer 2) |
 
 ---
 
@@ -188,12 +199,31 @@ Menghapus data FAQ berdasarkan ID dari database PostgreSQL.
 * **Method:** `DELETE`
 * **URL:** `http://localhost:3000/api/faq/1`
 
-#### 7. `POST /api/chat` (Chat AI Assistant)
-Menerima pertanyaan pengguna, mencocokkan context database, dan mengembalikan respons dari model Gemini.
+#### 7. `POST /api/chat` (Hybrid AI Assistant)
+Menerima pertanyaan pengguna, mengevaluasi pola aturan AIML (Layer 1), dan jika tidak cocok akan melakukan fallback cerdas ke model Generative AI Google Gemini dengan grounding basis data PostgreSQL (Layer 2).
 * **Method:** `POST`
 * **URL:** `http://localhost:3000/api/chat`
 
-**Contoh request normal:**
+**Contoh 1: Request Cocok Pola AIML (Instan & Rule-Based):**
+```json
+POST /api/chat
+{
+  "message": "bagaimana alur krs"
+}
+```
+
+**Response AIML (`200 OK` - latency ~12ms):**
+```json
+{
+  "success": true,
+  "data": {
+    "reply": "Alur pengisian KRS: (1) Selesaikan administrasi UKT semester, (2) Konsultasi rencana studi ke Dosen Pembimbing Akademik (DPA), (3) Login ke portal SIAKAD dan pilih mata kuliah, (4) Mintalah persetujuan DPA secara daring, (5) Unduh dan simpan bukti cetak KRS resmi.",
+    "source": "aiml"
+  }
+}
+```
+
+**Contoh 2: Request Pertanyaan Luas/Kompleks (Fallback ke Gemini AI):**
 ```json
 POST /api/chat
 {
@@ -201,17 +231,18 @@ POST /api/chat
 }
 ```
 
-**Contoh response sukses (`200 OK`):**
+**Response Gemini AI (`200 OK` - Grounded PostgreSQL Context):**
 ```json
 {
   "success": true,
   "data": {
-    "reply": "Halo! Saya Chatbot Akademika. Cuti akademik hanya dapat diajukan oleh mahasiswa yang telah menempuh minimal 2 semester perkuliahan..."
+    "reply": "Halo! Saya Chatbot Akademika. Cuti akademik hanya dapat diajukan oleh mahasiswa yang telah menempuh minimal 2 semester perkuliahan sesuai prosedur BAAK...",
+    "source": "gemini"
   }
 }
 ```
 
-**Contoh kalo user coba keluar konteks:**
+**Contoh 3: Pertanyaan di Luar Konteks Kampus (AI Guardrail Active):**
 ```json
 POST /api/chat
 {
@@ -219,7 +250,46 @@ POST /api/chat
 }
 ```
 
-Bot bakal menolak dan mengarahkan balik ke topik akademik kampus — ini terjadi karena aturan guardrail di `services/gemini.service.js` (`buildSystemInstruction`).
+Bot secara sopan menolak permintaan tersebut dan mengarahkan kembali ke domain akademik kampus melalui proteksi ganda backend (`middlewares/validateChatInput.js`) dan prompt guardrail (`services/gemini.service.js`).
+
+---
+
+## 🤖 Arsitektur Hybrid: AIML Pattern Matching + Google Gemini AI
+
+Aplikasi mengintegrasikan dua pendekatan kecerdasan buatan dalam satu kesatuan sistem:
+
+```text
+               [Pertanyaan Mahasiswa Masuk]
+                            │
+                            ▼
+           ┌─────────────────────────────────┐
+           │ Layer 1: AIML Pattern Matcher    │
+           │ (data/aiml/akademik.aiml)       │
+           └────────────────┬────────────────┘
+                            │
+              ┌─────────────┴─────────────┐
+        [Cocok Pola]                [Tidak Cocok]
+              │                           │
+              ▼                           ▼
+ ┌───────────────────────────┐ ┌───────────────────────────┐
+ │ Jawaban Template AIML     │ │ Layer 2: Google Gemini AI │
+ │ (Latency < 15ms, No Cost) │ │ Grounding Data PostgreSQL │
+ └─────────────┬─────────────┘ └─────────────┬─────────────┘
+               │                             │
+               └──────────────┬──────────────┘
+                              ▼
+           [Respons dikirimkan ke Antarmuka Mahasiswa]
+        (Disertai Badge: "🏷️ AIML" atau "🤖 Gemini AI")
+```
+
+1. **Layer 1 - AIML Rule-Based (Sesuai PRD):**
+   * Menggunakan berkas standar XML `data/aiml/akademik.aiml` yang memuat 19 kategori pola pertanyaan dan template jawaban.
+   * Diparsing dan dieksekusi secara instan oleh `services/aiml.service.js` menggunakan compiled regular expressions.
+   * Menangani sapaan, identitas bot, alur KRS, syarat bebas pustaka, pendaftaran yudisium, jam operasional BAAK, dsb.
+
+2. **Layer 2 - Generative AI LLM (Google Gemini):**
+   * Menangani pertanyaan yang lebih bervariasi, panjang, menggunakan bahasa informal, atau tidak tercakup dalam pola kaku AIML.
+   * Diberi konteks dinamis (*Grounding*) dari database PostgreSQL melalui fungsi `getKnowledgeContext()`.
 
 ---
 
@@ -319,22 +389,28 @@ Setiap request HTTP (`GET`, `POST`, `PUT`, `DELETE`) yang masuk ke backend terca
      npm start
      ```
 
-6. **Akses Melalui Browser:**
-   - **Frontend & AI Chatbot:** [http://localhost:3000](http://localhost:3000)
+6. **Akses Melalui Browser & CLI:**
+   - **Frontend & Chatbot Mahasiswa:** [http://localhost:3000](http://localhost:3000)
+   - **Portal Login Staff Admin BAAK:** [http://localhost:3000/login](http://localhost:3000/login) *(Demo: `admin` / `admin123`)*
+   - **Dasbor Manajemen FAQ Admin:** [http://localhost:3000/admin](http://localhost:3000/admin)
+   - **Uji Cepat Rule AIML (CLI):** `node scripts/test-aiml.js`
    - **API Status:** [http://localhost:3000/api/status](http://localhost:3000/api/status)
    - **API FAQ (CRUD):** [http://localhost:3000/api/faq](http://localhost:3000/api/faq)
-   - **API Chat AI:** [http://localhost:3000/api/chat](http://localhost:3000/api/chat)
+   - **API Chat Hybrid AI:** [http://localhost:3000/api/chat](http://localhost:3000/api/chat)
 
 ---
 
 ## ✅ Checklist Pemenuhan Tugas Berkelanjutan
 
-### Tahap Week 9 (Integrasi Generative AI Google Gemini)
+### Tahap Week 9 (Integrasi Generative AI Gemini, AIML & Portal Admin)
+* [x] Mengimplementasikan **AIML Pattern Matching Engine** berbasis berkas standar XML (`data/aiml/akademik.aiml`) dengan 19 kategori aturan akademik.
+* [x] Menerapkan **Arsitektur Hybrid (AIML Layer 1 → Gemini Layer 2)** dengan diferensiasi sumber respons visual (badge AIML vs Gemini AI di UI).
 * [x] Terhubung dengan **Google Gemini API** melalui backend Express.js menggunakan SDK `@google/generative-ai`.
 * [x] API Key dikelola aman melalui `.env` dan tidak pernah terekspos ke sisi frontend.
 * [x] Menerapkan **Context-Based AI Response** dengan menyuntikkan data resmi PostgreSQL (`faq_akademik`) sebagai sumber grounding.
 * [x] Menerapkan **Prompt Engineering & System Instruction** yang membatasi AI hanya menjawab informasi akademik kampus.
 * [x] Menerapkan **AI Guardrail & Defense in Depth** (validasi backend di `middlewares/validateChatInput.js` dan prompt rule di `services/gemini.service.js`).
+* [x] Menyediakan **Portal Login Admin** (`/login`) dan **Dasbor Manajemen FAQ** (`/admin`) untuk persona staff BAAK sesuai PRD.
 * [x] Endpoint `POST /api/chat` berfungsi mandiri dan terintegrasi dengan Live API Tester.
 * [x] Frontend terintegrasi menggunakan Fetch API, animasi loading bubble, dan penanganan error.
 * [x] Commit riwayat pengerjaan terstruktur rapi sesuai format tugas (`Week9(feat): ...`).
