@@ -49,6 +49,39 @@ const viewController = {
       console.error('Error saat merender halaman beranda:', error.message);
       res.status(500).send(`Gagal memuat halaman dari database: ${error.message}`);
     }
+  },
+
+  /**
+   * Menampilkan halaman login staff admin
+   */
+  renderLogin: (req, res) => {
+    res.render('login', {
+      title: `Login Admin - ${appConfig.APP_NAME}`,
+      appName: appConfig.APP_NAME,
+      appVersion: appConfig.APP_VERSION
+    });
+  },
+
+  /**
+   * Menampilkan halaman admin dashboard
+   */
+  renderAdmin: async (req, res) => {
+    try {
+      const faqs = await FaqModel.getAll();
+      const categories = [...new Set(faqs.map(f => f.kategori).filter(Boolean))];
+
+      res.render('admin', {
+        title: `Dasbor Admin - ${appConfig.APP_NAME}`,
+        appName: appConfig.APP_NAME,
+        appVersion: appConfig.APP_VERSION,
+        faqs,
+        categories,
+        totalFaq: faqs.length
+      });
+    } catch (error) {
+      console.error('Error saat merender admin dashboard:', error.message);
+      res.status(500).send(`Gagal memuat dashboard admin: ${error.message}`);
+    }
   }
 };
 
