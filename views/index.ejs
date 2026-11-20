@@ -840,7 +840,16 @@
 
         if (response.ok && result.success) {
           const replyText = (result.data && result.data.reply) ? result.data.reply : 'Tidak ada respon yang diterima.';
-          appendChatMessage('bot', formatAiResponse(replyText));
+          const source = (result.data && result.data.source) ? result.data.source : 'unknown';
+
+          let sourceBadge = '';
+          if (source === 'aiml') {
+            sourceBadge = `<div class="mt-2 flex items-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-900/60 text-emerald-300 border border-emerald-700/50"><i class="fa-solid fa-code-branch mr-1"></i>AIML Pattern Engine</span></div>`;
+          } else if (source === 'gemini') {
+            sourceBadge = `<div class="mt-2 flex items-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-900/60 text-indigo-300 border border-indigo-700/50"><i class="fa-solid fa-microchip mr-1"></i>Google Gemini AI + PostgreSQL</span></div>`;
+          }
+
+          appendChatMessage('bot', formatAiResponse(replyText) + sourceBadge);
         } else {
           // Tangani validasi gagal, prompt injection, atau error dari backend
           const errorMsg = result.message || 'Terjadi kendala saat memproses pertanyaan Anda.';
@@ -983,8 +992,8 @@
       const badgeElem = document.getElementById('chat-badge');
       const message = input ? input.value.trim() : '';
 
-      badgeElem.innerHTML = `<span class="text-amber-500 font-semibold">Mengirim ke Gemini...</span>`;
-      outputElem.innerText = '// Mengirim permintaan ke backend POST /api/chat...\n// Menyiapkan context database dan menjalankan inferensi Gemini LLM...';
+      badgeElem.innerHTML = `<span class="text-amber-500 font-semibold">Memproses pertanyaan...</span>`;
+      outputElem.innerText = '// Mengirim permintaan ke backend POST /api/chat...\n// Mengecek AIML Pattern Engine terlebih dahulu, lalu fallback ke Gemini AI...';
 
       const t0 = performance.now();
       try {
@@ -997,7 +1006,9 @@
         const data = await res.json();
 
         if (res.ok) {
-          badgeElem.innerHTML = `<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${res.status} OK (${duration}ms)</span>`;
+          const src = (data.data && data.data.source) || '';
+          const srcLabel = src === 'aiml' ? ' · 🏷️ AIML' : src === 'gemini' ? ' · 🤖 Gemini AI' : '';
+          badgeElem.innerHTML = `<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">${res.status} OK (${duration}ms)${srcLabel}</span>`;
         } else {
           badgeElem.innerHTML = `<span class="text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-200">${res.status} Error (${duration}ms)</span>`;
         }
